@@ -6,16 +6,21 @@ import random
 import matplotlib.pyplot as plt
 import os
 from datetime import datetime
+from multiprocessing import Pool
 
 def extract_data(path, env='log'):
 	print("Extracting " + env  + " data")
 
+	log_path = path + "/" + env + "/rss-log-glories"
 	if env == 'log':
-		log_path = path + "/rss/rss-log-glories"
 		prefix = 'P'
-	else:
-		log_path = path + "/test/rss-log-glories"
+	elif env == 'test':
 		prefix = 'PT'
+	elif env == 'test-buit':
+		prefix = 'PTB'
+	elif env == 'test-ple':
+		prefix = 'PTP'
+		
 	f = open(log_path)
 	
 	line = f.readline()
@@ -76,10 +81,7 @@ def extract_data(path, env='log'):
 def generate_csv(places_dict, point_dict, report_path, env='log'):
 	print("Generating " + env  + " signal strengh CSV files")
 	
-	if env == 'log':
-		csv_path = report_path + "/rss_values/rss"
-	else:
-		csv_path = report_path + "/rss_values/test"
+	csv_path = report_path + "/rss_values/" + env
 	
 	if not os.path.exists(csv_path):
 		print("\tDirectory " + csv_path + " does not exist, creating...")
@@ -109,10 +111,7 @@ def generate_csv(places_dict, point_dict, report_path, env='log'):
 def generate_distances_matrix(places_dict, point_dict, report_path, env='log'):
 	print("Generating " + env  + " distance matrix CSV files")
 	
-	if env == 'log':
-		distances_path = report_path + "/distancies/rss"
-	else:
-		distances_path = report_path + "/distancies/test"
+	distances_path = report_path + "/distancies/" + env
 	
 	if not os.path.exists(distances_path):
 		print("\tDirectory " + distances_path + " does not exist, creating...")
@@ -170,9 +169,11 @@ def generate_summary(report_path, point_dict, moment_dict, minima, maxima, env='
 		out = open(filename, 'a')
 		out.write("\n\n")
 
-	out.write("INFORME DE PRESA DE DADES\n")
-	out.write("-------------------------\n\n")
-	out.write(env + ":\n")
+	if env == 'log':
+		out.write("INFORME DE PRESA DE DADES\n")
+		out.write("-------------------------\n")
+	
+	out.write("\n" + env + ":\n")
 	out.write("Nombre de punts: " + str(len(point_dict)) + "\n")
 	out.write("Distància mínima mitjana entre punts: " + str(minima) + "\n")
 	out.write("Distancia mínima màxima entre punts: " + str(maxima) + "\n\n")
@@ -192,11 +193,11 @@ def generate_summary(report_path, point_dict, moment_dict, minima, maxima, env='
 def draw_points_in_map(plan_path, plan_settings_path, point_dict, report_path, env='log'):
 	print("Drawing " + env  + " points in map")
 	
-	if env == 'log':
-		point_plan_path = report_path + "/planol/rss"
-	else:
-		point_plan_path = report_path + "/planol/test"
-		rss_plan_path   = report_path + "/planol/rss"
+	point_plan_path = report_path + "/planol/" + env
+	if env == 'test':
+		rss_plan_path = report_path + "/planol/log"
+	if env == 'test-ple':
+		rss_plan_path = report_path + "/planol/test-buit" 
 	
 	if not os.path.exists(point_plan_path):
 		print("\tDirectory " + point_plan_path + " does not exist, creating...")
@@ -205,13 +206,15 @@ def draw_points_in_map(plan_path, plan_settings_path, point_dict, report_path, e
 	path_components = plan_path.split("/")
 	basename = path_components[len(path_components) - 1 ]
 	
+	save_path = point_plan_path + "/" + basename
+
 	radi = 5
 	text_size = 20;
 	im = Image.open(plan_path)
 	dimensions = load_actual_dimensions(plan_settings_path)
 	draw = ImageDraw.Draw(im)
 
-	if env == 'test':
+	if env == 'test' or env == 'test-ple':
 		im_over   = Image.open(rss_plan_path + "/" + basename)
 		draw_over = ImageDraw.Draw(im_over)
 
@@ -221,14 +224,16 @@ def draw_points_in_map(plan_path, plan_settings_path, point_dict, report_path, e
 	scale_x = im.size[0] / dimensions['width']
 	scale_y = im.size[1] / dimensions['height']
 	
-	for (x, y) in point_dict:
-		#draw = ImageDraw.Draw(im)
-		if env == 'log':
-			color =(0,0,0)
-		else:
-			color = (255, 50, 50)
-			#draw_over = ImageDraw.Draw(im_over)
+	if env == 'log':
+		color =(0,0,0)
+	elif env == 'test':
+		color = (255, 50, 50)
+	elif env == 'test-buit':
+		color = (30, 35, 255)
+	elif env == 'test-ple':
+		color = (108, 114, 0)
 
+	for (x, y) in point_dict:
 		bbox =  (float(x)*scale_x - radi/2, float(y)*scale_y - radi/2, float(x)*scale_x + radi/2, float(y)*scale_y + radi/2)
 		text = point_dict[(x, y)]
 		font = ImageFont.truetype("DroidSans-Bold.ttf", text_size)
@@ -240,27 +245,25 @@ def draw_points_in_map(plan_path, plan_settings_path, point_dict, report_path, e
 		draw.ellipse(bbox, fill=color)
 		draw.text(text_pos, text, fill=color, font=font)
 
-		if env == 'test':
+		if env == 'test' or env == 'test-ple':
 			draw_over.ellipse(bbox, fill=color)
 			draw_over.text(text_pos, text, fill=color, font=font)
 
 	
-	im.save(point_plan_path + "/" + basename, "PNG")
+	im.save(save_path, "PNG")
 
 	if env == 'test':
 		im_over.save(report_path + "/" + basename, "PNG")
+	elif env == 'test-ple':
+		im_over.save(report_path + "/test_" + basename, "PNG")
 	
 	print("Finished drawing " + env  + " points in map")
 
 def draw_points_in_map_per_day(plan_path, plan_settings_path, point_dict, moments_dict, report_path, env='log'):
 	print("Drawing " + env  + " points in map")
 	
-	if env == 'log':
-		per_day_point_plan_path = report_path + "/planol/rss/per_day"
-		incremental_point_plan_path = report_path + "/planol/rss/incremental"
-	else:
-		per_day_point_plan_path = report_path + "/planol/test/per_day"
-		incremental_point_plan_path = report_path + "/planol/test/incremental"
+	per_day_point_plan_path = report_path + "/planol/" + env + "/per_day"
+	incremental_point_plan_path = report_path + "/planol/" + env +"/incremental"
 	
 	if not os.path.exists(per_day_point_plan_path) :
 		print("\tDirectory " + per_day_point_plan_path + " does not exist, creating...")
@@ -284,6 +287,15 @@ def draw_points_in_map_per_day(plan_path, plan_settings_path, point_dict, moment
 	scale_x = im.size[0] / dimensions['width']
 	scale_y = im.size[1] / dimensions['height']
 	
+	if env == 'log':
+		color =(0,0,0)
+	elif env == 'test':
+		color = (255, 50, 50)
+	elif env == 'test-buit':
+		color = (232, 117, 202)
+	elif env == 'test-ple':
+		color = (202, 213, 0)
+
 	acum_path = plan_path
 	for (day, month, year) in sorted(moments_dict):
 		im = Image.open(plan_path)
@@ -293,10 +305,6 @@ def draw_points_in_map_per_day(plan_path, plan_settings_path, point_dict, moment
 		acum_draw = ImageDraw.Draw(acum_im)
 		
 		for loc in moments_dict[(day, month, year)]:
-			if env == 'log':
-				color =(0,0,0)
-			else:
-				color = (255, 50, 50)
 			(x, y) = loc[3]
 			bbox =  (float(x)*scale_x - radi/2, float(y)*scale_y - radi/2, float(x)*scale_x + radi/2, float(y)*scale_y + radi/2)
 			text = loc[2]
@@ -317,13 +325,11 @@ def draw_points_in_map_per_day(plan_path, plan_settings_path, point_dict, moment
  
 	print("Finished drawing " + env  + " points in map")
 
-def create_rss_plots(places_dict, point_dict, report_path, min_strength, max_strength, env='log'):
+def create_rss_plots(parameters):
+	(places_dict, point_dict, report_path, min_strength, max_strength, env) = parameters
 	print("Creating " + env  + " rss plots")
 	
-	if env == 'log':
-		rss_plots_path = report_path + "/plots/rss"
-	else:
-		rss_plots_path = report_path + "/plots/test"
+	rss_plots_path = report_path + "/plots/" + env
 	
 	if not os.path.exists(rss_plots_path):
 		print("\tDirectory " + rss_plots_path + " does not exist, creating...")
@@ -367,6 +373,7 @@ def calculate_distance(p1, p2):
 
 def main(root, report = ''):
 	rsslog_path = root + 'rsslogs'
+	testlog_path = root + 'testlogs'
 	plan_path = root + 'plans/planoGlories.png'
 	plan_settings_path = root + 'plans/planoGlories.config'
 	
@@ -379,21 +386,40 @@ def main(root, report = ''):
 		print("\tDirectory " + reports_path + " does not exist, creating...")
 		os.makedirs(reports_path)
 
-	(places_dict, point_dict, moment_dict, min_strength, max_strength) = extract_data(rsslog_path)
-	generate_csv(places_dict, point_dict, reports_path)
-	(point_dict, minima, maxima) = generate_distances_matrix(places_dict, point_dict, reports_path)
-	generate_summary(reports_path, point_dict, moment_dict, minima, maxima)
-	draw_points_in_map(plan_path, plan_settings_path, point_dict, reports_path)
-	draw_points_in_map_per_day(plan_path, plan_settings_path, point_dict, moment_dict, reports_path)
-	#create_rss_plots(places_dict, point_dict, reports_path, min_strength, max_strength)
+	(places_dict_log, point_dict_log, moment_dict_log, min_strength_log, max_strength_log) = extract_data(rsslog_path)
+	generate_csv(places_dict_log, point_dict_log, reports_path)
+	(point_dict_log, minima_log, maxima_log) = generate_distances_matrix(places_dict_log, point_dict_log, reports_path)
+	generate_summary(reports_path, point_dict_log, moment_dict_log, minima_log, maxima_log)
+	draw_points_in_map(plan_path, plan_settings_path, point_dict_log, reports_path)
+	draw_points_in_map_per_day(plan_path, plan_settings_path, point_dict_log, moment_dict_log, reports_path)
+	#create_rss_plots((places_dict_log, point_dict_log, reports_path, min_strength_log, max_strength_log, 'log'))
 
-	(places_dict, point_dict, moment_dict, min_strength, max_strength) = extract_data(rsslog_path, 'test')
-	generate_csv(places_dict, point_dict, reports_path, 'test')
-	(point_dict, minima, maxima) = generate_distances_matrix(places_dict, point_dict, reports_path, 'test')
-	generate_summary(reports_path, point_dict, moment_dict, minima, maxima, 'test')
-	draw_points_in_map(plan_path, plan_settings_path, point_dict, reports_path, 'test')
-	draw_points_in_map_per_day(plan_path, plan_settings_path, point_dict, moment_dict, reports_path, 'test')
-	#create_rss_plots(places_dict, point_dict, reports_path, min_strength, max_strength, 'test')
+	(places_dict_test, point_dict_test, moment_dict_test, min_strength_test, max_strength_test) = extract_data(rsslog_path, 'test')
+	generate_csv(places_dict_test, point_dict_test, reports_path, 'test')
+	(point_dict_test, minima_test, maxima_test) = generate_distances_matrix(places_dict_test, point_dict_test, reports_path, 'test')
+	generate_summary(reports_path, point_dict_test, moment_dict_test, minima_test, maxima_test, 'test')
+	draw_points_in_map(plan_path, plan_settings_path, point_dict_test, reports_path, 'test')
+	draw_points_in_map_per_day(plan_path, plan_settings_path, point_dict_test, moment_dict_test, reports_path, 'test')
+	#create_rss_plots(places_dict_test, point_dict_test, reports_path, min_strength_test, max_strength_test, 'test')
+	
+	(places_dict_buit, point_dict_buit, moment_dict_buit, min_strength_buit, max_strength_buit) = extract_data(testlog_path, 'test-buit')
+	generate_csv(places_dict_buit, point_dict_buit, reports_path, 'test-buit')
+	(point_dict_buit, minima_buit, maxima_buit) = generate_distances_matrix(places_dict_buit, point_dict_buit, reports_path, 'test-buit')
+	generate_summary(reports_path, point_dict_buit, moment_dict_buit, minima_buit, maxima_buit, 'test-buit')
+	draw_points_in_map(plan_path, plan_settings_path, point_dict_buit, reports_path, 'test-buit')
+	draw_points_in_map_per_day(plan_path, plan_settings_path, point_dict_buit, moment_dict_buit, reports_path, 'test-buit')
+	#create_rss_plots(places_dict_buit, point_dict_buit, reports_path, min_strength_buit, max_strength_buit, 'test-buit')
+	
+	(places_dict_ple, point_dict_ple, moment_dict_ple, min_strength_ple, max_strength_ple) = extract_data(testlog_path, 'test-ple')
+	generate_csv(places_dict_ple, point_dict_ple, reports_path, 'test-ple')
+	(point_dict_ple, minima_ple, maxima_ple) = generate_distances_matrix(places_dict_ple, point_dict_ple, reports_path, 'test-ple')
+	generate_summary(reports_path, point_dict_ple, moment_dict_ple, minima_ple, maxima_ple, 'test-ple')
+	draw_points_in_map(plan_path, plan_settings_path, point_dict_ple, reports_path, 'test-ple')
+	draw_points_in_map_per_day(plan_path, plan_settings_path, point_dict_ple, moment_dict_ple, reports_path, 'test-ple')
+	#create_rss_plots(places_dict_ple, point_dict_ple, reports_path, min_strength_ple, max_strength_ple, 'test-ple')
+	
+	p = Pool(4)
+	p.map(create_rss_plots, [(places_dict_log, point_dict_log, reports_path, min_strength_log, max_strength_log, 'log'), (places_dict_test, point_dict_test, reports_path, min_strength_test, max_strength_test, 'test'), (places_dict_buit, point_dict_buit, reports_path, min_strength_buit, max_strength_buit, 'test-buit'), (places_dict_ple, point_dict_ple, reports_path, min_strength_ple, max_strength_ple, 'test-ple')])
 
 def print_use_message():
 	print("Quantitat errònia de paràmetres.\n")
