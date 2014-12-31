@@ -8,6 +8,8 @@ from os.path import isfile, join
 import statistics
 
 
+tenda = set([1, 4, 7, 10, 11, 13, 14, 16, 17, 18, 19, 20, 22, 23, 25, 26, 28, 33, 40, 41, 42, 43, 47, 52, 57, 59, 61, 66, 67, 68, 73, 74, 75, 78, 84, 93, 94, 98, 105, 108, 109, 113])
+
 def extract_data(path, env='buit'):
     print("Extracting " + env + " data")
 
@@ -47,7 +49,7 @@ def extract_data(path, env='buit'):
 
                     if real_point not in point_info:
                         point_info[real_point] = dict()
-                        point_info[real_point]['id'] = point_number
+                        point_info[real_point]['id'] = int(point_number)
                         point_info[real_point]['calcx'] = []
                         point_info[real_point]['calcy'] = []
                         point_info[real_point]['calcerror'] = []
@@ -58,7 +60,7 @@ def extract_data(path, env='buit'):
 
                 line = f.readline().replace("\n", "")
 
-            estimations_dict[algorithm][algorithm_settings] = point_info
+            estimations_dict[algorithm][int(float(algorithm_settings))] = point_info
 
     print("Done extracting " + env + " data")
     return estimations_dict
@@ -115,7 +117,7 @@ def calculate_statistics(estimations_dict, env='buit'):
     return estimations_dict
 
 
-def classify_error(estimations_dict, error_dict, env='buit'):
+def classify_error(estimations_dict, error_dict, reverse_point_label_dict, situacio='tots', env='buit'):
     if error_dict is None:
         error_dict = dict()
 
@@ -123,45 +125,73 @@ def classify_error(estimations_dict, error_dict, env='buit'):
         if algorithm not in error_dict:
             error_dict[algorithm] = dict()
 
-        if 'error_' + env not in error_dict[algorithm]:
-            error_dict[algorithm]['error_' + env] = []
+        if 'mitja_error_' + env not in error_dict[algorithm]:
+            error_dict[algorithm]['mitja_error_' + env] = []
+
+        if 'mediana_error_' + env not in error_dict[algorithm]:
+            error_dict[algorithm]['mediana_error_' + env] = []
 
         if 'desviacio_' + env not in error_dict[algorithm]:
             error_dict[algorithm]['desviacio_' + env] = []
 
         for k in sorted(list(estimations_dict[algorithm].keys())):
-            error_mitja = 0.0
-            m_desviacio_mitjana = 0.0
-            for point in estimations_dict[algorithm][k]:
-                error_mitja += estimations_dict[algorithm][k][point]['error_ind_mitja']
-                m_desviacio_mitjana += estimations_dict[algorithm][k][point]['desviacio_mitjana']
+            if situacio == 'tots':
+                errors = [estimations_dict[algorithm][k][point]['error_ind_mitja'] for point in estimations_dict[algorithm][k]]
+                desviacions = [estimations_dict[algorithm][k][point]['desviacio_mitjana'] for point in estimations_dict[algorithm][k]]
+            elif situacio == 'tenda':
+                errors = []
+                desviacions = []
+                for point in estimations_dict[algorithm][k]:
+                    if reverse_point_label_dict[point] in tenda :
+                        errors.append(estimations_dict[algorithm][k][point]['error_ind_mitja'])
+                        desviacions.append(estimations_dict[algorithm][k][point]['desviacio_mitjana'])
+            elif situacio == 'passadis':
+                errors = []
+                desviacions = []
+                for point in estimations_dict[algorithm][k]:
+                    if reverse_point_label_dict[point] not in tenda :
+                        errors.append(estimations_dict[algorithm][k][point]['error_ind_mitja'])
+                        desviacions.append(estimations_dict[algorithm][k][point]['desviacio_mitjana'])
 
-            error_mitja /= len(estimations_dict[algorithm][k])
-            m_desviacio_mitjana /= len(estimations_dict[algorithm][k])
+            if len(errors) > 0 :
+                error_mitja = statistics.mean(errors)
+                error_media = errors[int(len(errors)/2)]
+            else:
+                error_mitja = 'No data'
+                error_media = 'No data'
 
-            error_dict[algorithm]['error_' + env].append(error_mitja)
+            if len(errors) > 0 :
+                m_desviacio_mitjana = statistics.mean(desviacions)
+            else:
+                m_desviacio_mitjana = 'No data'
+
+            error_dict[algorithm]['mitja_error_' + env].append(error_mitja)
+            error_dict[algorithm]['mediana_error_' + env].append(error_media)
             error_dict[algorithm]['desviacio_' + env].append(m_desviacio_mitjana)
 
     return error_dict
 
 
-def create_error_summary(estimations_path, error_dict, dades):
-    if dades == 'error' :
-        out = open(estimations_path + "/resum.csv", 'w')
+def create_error_summary(estimations_path, error_dict, situacio, dades):
+    if dades == 'mitja_error':
+        out = open(estimations_path + "/resum_" + situacio + ".csv", 'w')
         out.write('ERROR MITJÀ\n\n')
+    elif dades == 'mediana_error':
+        out = open(estimations_path + "/resum_" + situacio + ".csv", 'a')
+        out.write('ERROR MEDIÀ\n\n')
     else:
-        out = open(estimations_path + "/resum.csv", 'a')
+        out = open(estimations_path + "/resum_" + situacio + ".csv", 'a')
         out.write('DESVIACIÓ MITJANA\n\n')
 
     out.write('$')
 
     for algorithm in sorted(list(error_dict.keys())):
         n_elements=len(error_dict[algorithm][dades + '_buit'])
-        out.write(algorithm + '$$')
+        out.write(algorithm + '$$$')
 
     out.write('\n')
     out.write('K$')
-    out.write('Buit$Ple$' * len(error_dict))
+    out.write('Buit$Ple$Increment$' * len(error_dict))
     out.write('\n')
 
     for k in range(n_elements):
@@ -169,6 +199,9 @@ def create_error_summary(estimations_path, error_dict, dades):
         for algorithm in sorted(list(error_dict.keys())):
             out.write(str(error_dict[algorithm][dades + '_buit'][k]) + '$')
             out.write(str(error_dict[algorithm][dades + '_ple'][k]) + '$')
+            if not isinstance(error_dict[algorithm][dades + '_ple'][k], str) and error_dict[algorithm][dades + '_ple'][k] > 0:
+                increment = (error_dict[algorithm][dades + '_ple'][k] / error_dict[algorithm][dades + '_buit'][k] - 1) * 100
+                out.write(str(increment) + '%$')
         out.write('\n')
     out.write('\n\n')
     out.close()
@@ -198,21 +231,20 @@ def create_algorithm_summaries(reports_path, original_plan_path, plan_settings_p
             os.makedirs(alg_path)
 
         for algorithm_settings in estimations_dict[algorithm]:
-            out.write("\tValor del paràmetre principal de l'algorisme: " + algorithm_settings + "\n")
+            out.write("\tValor del paràmetre principal de l'algorisme: " + str(algorithm_settings) + "\n")
 
-            plan_path = alg_path + "/" + algorithm_settings
+            plan_path = alg_path + "/" + str(algorithm_settings)
             draw_points_in_map(original_plan_path, plan_settings_path, plan_path, estimations_dict[algorithm][algorithm_settings], point_label_dict)
 
-            error_mitja = 0.0
-            m_desviacio_mitjana = 0.0
-            for point in estimations_dict[algorithm][algorithm_settings]:
-                error_mitja += estimations_dict[algorithm][algorithm_settings][point]['error_ind_mitja']
-                m_desviacio_mitjana += estimations_dict[algorithm][algorithm_settings][point]['desviacio_mitjana']
+            errors = [estimations_dict[algorithm][algorithm_settings][point]['error_ind_mitja'] for point in estimations_dict[algorithm][algorithm_settings]]
+            desviacions = [estimations_dict[algorithm][algorithm_settings][point]['desviacio_mitjana'] for point in estimations_dict[algorithm][algorithm_settings]]
 
-            error_mitja /= len(estimations_dict[algorithm][algorithm_settings])
-            m_desviacio_mitjana /= len(estimations_dict[algorithm][algorithm_settings])
+            error_mitja = statistics.mean(errors)
+            error_media = errors[int(len(errors)/2)]
+            m_desviacio_mitjana = statistics.mean(desviacions)
 
             out.write("\t\tMitja de l'error de les estimacions: " + str(error_mitja) + "\n")
+            out.write("\t\tMediana de l'error de les estimacions: " + str(error_media) + "\n")
             out.write("\t\tMitja de la desviació mitjana de les estimacions: " + str(m_desviacio_mitjana) + "\n\n")
 
         out.write("\n\n")
@@ -293,7 +325,7 @@ def draw_points_in_map(original_plan_path, plan_settings_path, plan_path, point_
             est_y = point_dict[point]['calcy'][i] * scale_y
             bbox = (est_x - radi/2, est_y - radi/2, est_x + radi/2, est_y + radi/2)
             pp_draw.ellipse(bbox, fill=color_ind)
-        pp_im.save(per_point_path + "/" + point_label_dict[point] + ".png", "PNG")
+        pp_im.save(per_point_path + "/" + str(point_label_dict[point]) + ".png", "PNG")
 
     im.save(plan_path + "/plan.png", "PNG")
     print("Finished drawing points in map")
@@ -329,21 +361,34 @@ def main(root, report=''):
         os.makedirs(reports_path)
 
     estimations_dict = extract_data(estimations_path)
-    point_label_dict = label_points(estimations_dict, None)
+    point_label_dict_buit = label_points(estimations_dict, None)
     estimations_dict = calculate_statistics(estimations_dict)
-    error_dict = classify_error(estimations_dict, None)
+    error_dict = classify_error(estimations_dict, None, point_label_dict_buit)
     #print(error_dict)
-    create_algorithm_summaries(reports_path, original_plan_path, plan_settings_path, estimations_dict, point_label_dict)
+    create_algorithm_summaries(reports_path, original_plan_path, plan_settings_path, estimations_dict, point_label_dict_buit)
 
     estimations_dict_ple = extract_data(estimations_path, 'ple')
-    point_label_dict = label_points(estimations_dict_ple, point_label_dict, 'ple')
+    point_label_dict_ple = label_points(estimations_dict_ple, point_label_dict_buit, 'ple')
     estimations_dict_ple = calculate_statistics(estimations_dict_ple, 'ple')
-    error_dict = classify_error(estimations_dict_ple, error_dict, 'ple')
+    error_dict = classify_error(estimations_dict_ple, error_dict, point_label_dict_ple, 'tots', 'ple')
     #print(error_dict)
-    create_algorithm_summaries(reports_path, original_plan_path, plan_settings_path, estimations_dict_ple, point_label_dict, 'ple')
+    create_algorithm_summaries(reports_path, original_plan_path, plan_settings_path, estimations_dict_ple, point_label_dict_ple, 'ple')
 
-    create_error_summary(reports_path + '/estimations', error_dict, 'error')
-    create_error_summary(reports_path + '/estimations', error_dict, 'desviacio')
+    create_error_summary(reports_path + '/estimations', error_dict, 'tots', 'mitja_error')
+    create_error_summary(reports_path + '/estimations', error_dict, 'tots', 'mediana_error')
+    create_error_summary(reports_path + '/estimations', error_dict, 'tots', 'desviacio')
+
+    error_dict = classify_error(estimations_dict, None, point_label_dict_buit, 'tenda', 'buit')
+    error_dict = classify_error(estimations_dict_ple, error_dict, point_label_dict_ple, 'tenda', 'ple')
+    create_error_summary(reports_path + '/estimations', error_dict, 'tenda', 'mitja_error')
+    create_error_summary(reports_path + '/estimations', error_dict, 'tenda', 'mediana_error')
+    create_error_summary(reports_path + '/estimations', error_dict, 'tenda', 'desviacio')
+
+    error_dict = classify_error(estimations_dict, None, point_label_dict_buit, 'passadis', 'buit')
+    error_dict = classify_error(estimations_dict_ple, error_dict, point_label_dict_ple, 'passadis', 'ple')
+    create_error_summary(reports_path + '/estimations', error_dict, 'passadis', 'mitja_error')
+    create_error_summary(reports_path + '/estimations', error_dict, 'passadis', 'mediana_error')
+    create_error_summary(reports_path + '/estimations', error_dict, 'passadis', 'desviacio')
 
 def print_use_message():
     print("Quantitat errònia de paràmetres.\n")
