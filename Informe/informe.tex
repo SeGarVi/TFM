@@ -1,70 +1,58 @@
-\documentclass[a4paper, 10pt]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[spanish]{babel}
+\documentclass[a4paper, 10pt, twocolumn]{article}
 
+\usepackage[utf8]{inputenc}
+\usepackage[spanish, catalan]{babel}
 \usepackage{amsmath,amssymb,amsfonts,latexsym}
 \usepackage[dvips]{graphicx}
-
 \usepackage[footnotesize]{caption}
-
-%\usepackage{/usr/share/texmf-dist/tex/latex/wrapfig/wrapfig}
 \usepackage{wrapfig}
-
-\usepackage{cancel}
-
+\usepackage{colortbl}
+\usepackage[table]{xcolor}
+\usepackage{hyperref}
+\usepackage{url}
 \usepackage{eurosym}
 \DeclareInputText{128}{\euro}
 
-\usepackage{colortbl}
-\usepackage[table]{xcolor}
-
-\usepackage{multicol}
-
-\usepackage{url}
-
-\pagestyle{headings}
-
-\usepackage{hyperref}
+%\usepackage{multicol}
+%\usepackage{/usr/share/texmf-dist/tex/latex/wrapfig/wrapfig}
+%\usepackage{cancel}
+%\pagestyle{headings}
 
 
-\date{\today{}}
+
+
+
+\title{Influència del nombre d'usuaris en l’error de localització en interiors amb Wi-Fi}
+\author{Sergio García Villalonga}
 
 \begin{document}
+\maketitle
 
-\tableofcontents
-\newpage
+\input parts/00_abstract.tex
 
 \section{Introducció}
-\input Partes/01_introduccio.tex
-\newpage
-
+\input parts/01_introduccio.tex
+ 
 \section{Objetius}
-\input Partes/02_objectius.tex
-\newpage
+\input parts/02_objectius.tex
 
 \section{Estat de la qüestió}
-\input Partes/03_estat_questio.tex
-\newpage
+\input parts/03_estat_questio.tex
 
 \section{Eines}
-\input Partes/04_eines.tex
-\newpage
+\input parts/04_eines.tex
 
 \section{Presa de dades}
-\input Partes/05_presa_dades.tex
-\newpage
+\input parts/05_presa_dades.tex
 
 \section{Proves i resultats}
-\input Partes/05_proves_resultats.tex
-\newpage
+\input parts/06_proves_resultats.tex
 
 \section{Conclusió}
-\input Partes/06_conclusio.tex
-\newpage
+\input parts/07_conclusio.tex
 
 \section{Treball futur}
-\input Partes/07_treball_futur.tex
-\newpage
+\input parts/08_treball_futur.tex
 
 \bibliographystyle{plain}
 \bibliography{informe}
