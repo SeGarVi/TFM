@@ -1,0 +1,73 @@
+\documentclass[a4paper, 10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+\usepackage{amsmath,amssymb,amsfonts,latexsym}
+\usepackage[dvips]{graphicx}
+
+\usepackage[footnotesize]{caption}
+
+%\usepackage{/usr/share/texmf-dist/tex/latex/wrapfig/wrapfig}
+\usepackage{wrapfig}
+
+\usepackage{cancel}
+
+\usepackage{eurosym}
+\DeclareInputText{128}{\euro}
+
+\usepackage{colortbl}
+\usepackage[table]{xcolor}
+
+\usepackage{multicol}
+
+\usepackage{url}
+
+\pagestyle{headings}
+
+\usepackage{hyperref}
+
+
+\date{\today{}}
+
+\begin{document}
+
+\tableofcontents
+\newpage
+
+\section{Introducció}
+\input Partes/01_introduccio.tex
+\newpage
+
+\section{Objetius}
+\input Partes/02_objectius.tex
+\newpage
+
+\section{Estat de la qüestió}
+\input Partes/03_estat_questio.tex
+\newpage
+
+\section{Eines}
+\input Partes/04_eines.tex
+\newpage
+
+\section{Presa de dades}
+\input Partes/05_presa_dades.tex
+\newpage
+
+\section{Proves i resultats}
+\input Partes/05_proves_resultats.tex
+\newpage
+
+\section{Conclusió}
+\input Partes/06_conclusio.tex
+\newpage
+
+\section{Treball futur}
+\input Partes/07_treball_futur.tex
+\newpage
+
+\bibliographystyle{plain}
+\bibliography{informe}
+
+\end{document}
+

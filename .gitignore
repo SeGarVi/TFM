@@ -1,0 +1,6 @@
+*.tex~
+*.aux
+*.log
+informe.pdf
+*.toc
+*.tex.ini
