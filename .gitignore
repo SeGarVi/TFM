@@ -1,4 +1,5 @@
 *.tex~
+*.bib~
 *.aux
 *.log
 informe.pdf
