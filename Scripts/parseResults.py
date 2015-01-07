@@ -69,7 +69,16 @@ def extract_data(path, env='buit'):
 def label_points(estimations_dict, existing_point_label_dict, env='buit'):
     point_label_dict = dict()
     settings = estimations_dict[list(estimations_dict.keys())[0]]
-    point_info = settings[list(settings.keys())[0]]
+    #point_info = settings[list(settings.keys())[0]]
+    
+    point_info = []
+    for setting in settings:
+      if point_info == [] or len(list(settings[setting].keys())) > len(list(point_info.keys())):
+        point_info = settings[setting]
+    
+    
+    print ("Found " + str(len(list(point_info.keys()))) + " points")
+    
     if env == 'buit':
         for point in point_info:
             point_label_dict[point] = point_info[point]['id']
@@ -146,6 +155,7 @@ def classify_error(estimations_dict, error_dict, reverse_point_label_dict, situa
                         errors.append(estimations_dict[algorithm][k][point]['error_ind_mitja'])
                         desviacions.append(estimations_dict[algorithm][k][point]['desviacio_mitjana'])
             elif situacio == 'passadis':
+                print("p")
                 errors = []
                 desviacions = []
                 for point in estimations_dict[algorithm][k]:
@@ -234,7 +244,7 @@ def create_algorithm_summaries(reports_path, original_plan_path, plan_settings_p
             out.write("\tValor del paràmetre principal de l'algorisme: " + str(algorithm_settings) + "\n")
 
             plan_path = alg_path + "/" + str(algorithm_settings)
-            draw_points_in_map(original_plan_path, plan_settings_path, plan_path, estimations_dict[algorithm][algorithm_settings], point_label_dict)
+            #draw_points_in_map(original_plan_path, plan_settings_path, plan_path, estimations_dict[algorithm][algorithm_settings], point_label_dict)
 
             errors = [estimations_dict[algorithm][algorithm_settings][point]['error_ind_mitja'] for point in estimations_dict[algorithm][algorithm_settings]]
             desviacions = [estimations_dict[algorithm][algorithm_settings][point]['desviacio_mitjana'] for point in estimations_dict[algorithm][algorithm_settings]]
