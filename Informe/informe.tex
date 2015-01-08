@@ -2,6 +2,9 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[spanish, catalan]{babel}
+
+\usepackage[fixlanguage]{babelbib}
+\selectbiblanguage{catalan}
 \usepackage{amsmath,amssymb,amsfonts,latexsym}
 \usepackage[dvips]{graphicx}
 \usepackage[footnotesize]{caption}
@@ -54,8 +57,11 @@
 \section{Treball futur}
 \input parts/08_treball_futur.tex
 
-\bibliographystyle{plain}
+\bibliographystyle{babplain}
 \bibliography{informe}
+
+%\bibliographystyle{plain}
+%\bibliography{informe}
 
 \end{document}
 
