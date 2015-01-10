@@ -4,19 +4,19 @@ L’estudi del posicionament ha estat llargament estudiat. Malgrat existeixen te
 
 Les tècniques utilitzades per dur a terme sistemes de posicionament són molt variades, com els  sistemes basats en anàlisi d’imatges de càmeres \cite{martinez} \cite{mulloni}, anàlisi del moviment de l’usuari o anàlisi de les propietats de les ones emeses per diversos dispositius. S’ha de tenir en compte, però, que depenent de la tecnologia, com els sistemes de càmeres, els problemes de privacitat inherents a qualsevol sistema de localització es poden veure incrementats, pel que haurien d’evitar-se \cite{garcia}.
 
-A continuació es presenten diferents tècniques i tecnologies per tal de dur a terme una aproximació a la situació actual de la localització en interiors. Es dona èmfasi a les característiques, tant positives com negatives, dels sistemes inercials i els basats en ones de ràdio, quins problemes han d’afrontar i quin tipus d’algoritmes fan servir per inferir una localització. Finalment es presenten alguns projectes de programari lliure utilitzats en la localització en interiors.
+A continuació es presenten diferents tècniques i tecnologies per tal de dur a terme una aproximació a la situació actual de la localització en interiors. Es dona èmfasi a les característiques, tant positives com negatives, dels sistemes inercials i els basats en ones de ràdio, quins problemes han d’afrontar i quin tipus d’algorismes fan servir per inferir una localització. Finalment es presenten alguns projectes de programari lliure utilitzats en la localització en interiors.
 
 \subsection{Sistemes basats en tecnologies sense fils}
 
 Els sistemes basats en tecnologies sense fils es basen la utilització de sistemes emissors d'ones i, en el càlcul o aproximació de la localització a partir de l'anàlisi de diverses propietats físiques d'aquestes. L'elecció del mètode d'estimació de la localització com la tecnologia emissora no és trivial i influeixen en diferents aspectes com poden ser tant la precisió, com el cost del sistema.
 
-En les següents seccions es comenten les tècniques, algorismes i problemes més comuns a la hora de realitzar tasques de localització en interiors utilitzant tecnologies sense fils, així com una sèrie de estudis i sistemes existents classificats per la tecnologia utilitzada. 
+En les següents seccions es comenten les tècniques, algorismes i problemes més comuns a l'hora de realitzar tasques de localització en interiors utilitzant tecnologies sense fils, així com una sèrie d'estudis i sistemes existents classificats per la tecnologia utilitzada. 
 
 \subsubsection{Mètodes d’estimació de la localització}
 
-Modelar la propagació de les ones en interior no és fàcil, ja que els sistemes basats en tecnologies sense fils pateixen una sèrie de problemes comuns relatius a la naturalesa mateixa de les ones. Fenòmens com la difracció, la reflexió, la incapacitat de penetració o la dispersió poden fer que els valors de mesura es vegin distorsionats, afegint incertesa al sistema. Per solucionar aquests problemes, s’han d’assegurar un mínim de estacions emissores d’ones (el nombre pot variar segons la tecnologia) \cite{bagosi}.
+Modelar la propagació de les ones en interior no és fàcil, ja que els sistemes basats en tecnologies sense fils pateixen una sèrie de problemes comuns relatius a la naturalesa mateixa de les ones. Fenòmens com la difracció, la reflexió, la incapacitat de penetració o la dispersió poden fer que els valors de mesura es vegin distorsionats, afegint incertesa al sistema. Per solucionar aquests problemes, s’han d’assegurar un mínim d'estacions emissores d’ones (el nombre pot variar segons la tecnologia) \cite{bagosi}.
 
-Excepte en l'ús de la triangulació clàssica, els algoritmes de posicionament utilitzen altres mesures per minimitzar l'error, com un anàlisi a priori de l'escenari, per exemple.
+Excepte en l'ús de la triangulació clàssica, els algorismes de posicionament utilitzen altres mesures per minimitzar l'error, com un anàlisi a priori de l'escenari, per exemple.
 
 \paragraph{Triangulació}
 
@@ -31,26 +31,26 @@ La triangulació basa els seus mètodes en el coneixement de la posició de les 
         \item \textbf{TDOA} (time difference of arrival, diferència del temps d'arribada): la idea del TDOA és calcular la diferència temporal en que el senyal arriba des de diferents fonts d’emisió, en comptes del temps absolut d'arribada del TOA. La localització pot ser estimada amb la intersecció de dos o més mesures de TDOA.
         \item \textbf{RTOF} (roundtrip time of flight, temps d'anada i tornada): utilitza el temps de transmissió del senyal, encara que de l'anada i tornada, eliminant la necessitat de sincronització forta del TOA. De totes formes, el dispositiu a localitzar pot afegir un retard a la resposta, cosa que esdevé un problema al poder ser variable i dependre del dispositiu. En casos de mesura de distàncies curtes, l'error pot ser considerable.
         \item \textbf{CN} (closest neighbour, veí més proper): assumeix la localització de l’usuari com la del punt de referència més proper a aquest.
-        \item \textbf{RSS} (received signal strengh, intensitat del senyal rebut): els anteriors mètodes necessiten una línia de visibilitat directa entre els transmissors i l'usuari, i el senyal es pot veure afectat per fenòmens físics com la reflexió. Aquest mètode tracta de calcular la pèrdua de força de la senyal causada per la seva propagació. El principal inconvenient és la atenuació del senyal degut a obstacles.
+        \item \textbf{RSS} (received signal strengh, intensitat del senyal rebut): els anteriors mètodes necessiten una línia de visibilitat directa entre els transmissors i l'usuari, i el senyal es pot veure afectat per fenòmens físics com la reflexió. Aquest mètode tracta de calcular la pèrdua de força de la senyal causada per la seva propagació. El principal inconvenient és l'atenuació del senyal degut a obstacles.
         \item \textbf{Received signal phase method} (mètode de la fase de senyal rebuda): aquest mètode també rep el nom de POA (phase of arrival, fase d'arribada). Utilitza la fase de la ona portadora, assumint que les ones emeses són ones sinusoidals pures, de la mateixa freqüència i sense cap tipus de compensació (offset) inicial. La fase del senyal rebut des de diferents punts emissors permet estimar la posició. El principal problema d'aquest mètode són els obstacles i fenòmens com la reflexió. Necessita una línia de visió directa.
 
     \end{itemize}
 
-    \item \textbf{Angulació}: s’aplica la tècnica d’AOA (angle of arrival, angle d'arribada) amb la que localització es pot trobar mitjançant la intersecció de diverses línies de vectors angulars, cada un format per el radi circular des de la estació base fins al dispositiu usuari. Aquesta tècnica té l'avantatge de necessitar només dues estacions base, com a mínim, per trobar un punt en una localització bidimensional (o tres per a una localització tridimensional) \cite{liu} i de que no es necessita cap tipus de sincronització temporal. Per contra, es necessiten o antenes direccionals, o una matriu d'antenes (pel que els requeriments de maquinari són més complexes) i que la precisió de la localització minva amb la distància.
+    \item \textbf{Angulació}: s’aplica la tècnica d’AOA (angle of arrival, angle d'arribada) amb la que localització es pot trobar mitjançant la intersecció de diverses línies de vectors angulars, cada un format per el radi circular des de l'estació base fins al dispositiu usuari. Aquesta tècnica té l'avantatge de necessitar només dues estacions base, com a mínim, per trobar un punt en una localització bidimensional (o tres per a una localització tridimensional) \cite{liu} i de que no es necessita cap tipus de sincronització temporal. Per contra, es necessiten o antenes direccionals, o una matriu d'antenes (pel que els requeriments de maquinari són més complexes) i que la precisió de la localització minva amb la distància.
     
 \end{itemize}
 
 \paragraph{Reconeixement de patrons}
 
-Els algoritmes de reconeixement de patrons es divideixen en dues fases. En la primera, la fase fora de línia (offline), es porta a terme un anàlisi de l'intensitat rebuda des de les fonts de senyals fins a certs punts. El resultat és l’anomenat mapa de ràdio, on es relacionen aquestes dades. Posteriorment, en la fase en línia (online), s'estima la localització de l'usuari cercant patrons entre les dades mesurades "en viu" i les empremtes enregistrades anteriorment.
+Els algorismes de reconeixement de patrons es divideixen en dues fases. En la primera, la fase fora de línia (offline), es porta a terme un anàlisi de l'intensitat rebuda des de les fonts de senyals fins a certs punts. El resultat és l’anomenat mapa de ràdio, on es relacionen aquestes dades. Posteriorment, en la fase en línia (online), s'estima la localització de l'usuari cercant patrons entre les dades mesurades "en viu" i les empremtes enregistrades anteriorment.
 
-El principal problema que afronten aquests algoritmes és que, en un mateix punt, al llarg del temps, pot fluctuar notablement, pel que la decisió del nombre de punts de referència i la quantitat de enregistraments del senyal en cada un no és trivial \cite{bagosi}
+El principal problema que afronten aquests algorismes és que, en un mateix punt, al llarg del temps, pot fluctuar notablement, pel que la decisió del nombre de punts de referència i la quantitat de enregistraments del senyal en cada un no és trivial \cite{bagosi}
 Podem diferenciar cinc tipus de mètodes d'aquest tipus:
 
 \begin{itemize}
 
     \item \textbf{Mètodes probabilístics}: la localització s'infereix segons la probabilitat de que el senyal rebut sigui a un punt en concret. S'utilitzen diversos mètodes probabilístics com la formula de Bayes, filtres de partícules o el mètode del model de Markov ocult \cite{evennou}. També s'utilitzen dades de desviació estàndard per dur a terme una aproximació més acurada.
-    \item \textbf{kNN} (k nearest neighbours): les dades de posicionament en línia permeten trobar els k punts de referència més propers. La mitjana d'aquests permet dur a terme una estimació. Si la mitjana es pondera amb les dades de intensitat del senyal rebut es pot obtenir una estimació més acurada.
+    \item \textbf{kNN} (k nearest neighbours): les dades de posicionament en línia permeten trobar els k punts de referència més propers. La mitjana d'aquests permet dur a terme una estimació. Si la mitjana es pondera amb les dades d'intensitat del senyal rebut es pot obtenir una estimació més acurada.
     \item \textbf{Xarxes neuronals}: les mesures de la fase fora de línia serveixen com a dades d'entrenament dels pesos d'una xarxa neuronal artificial.
     \item \textbf{SVM} (support vector machines): es tracta d'una eina de classificació i regressió de dades, a partir de tècniques d’aprenentatge supervisat.
     \item \textbf{SMP} (smallest M-vertex polygon): s'utilitzen les dades en línia per cercar punts candidats, formant un polígon mínim, amb el qual es calcula una aproximació de la localització com a la mitjana de la posició dels vèrtex.
@@ -59,11 +59,11 @@ Podem diferenciar cinc tipus de mètodes d'aquest tipus:
 
 \paragraph{Proximitat}
 
-Els algoritmes de proximitat es solen utilitzar a entorns amb gran quantitat d'antenes que formen una xarxa o cel·les, com poden ser la tencnologia GSM. En aquests algoritmes, quan una antena detecta dispositiu a localitzar, es considera que esta col·locat en "ella". En el cas de que diverses antenes detectin el dispositiu, es considera que es troba col·locat en l'antena del qual rep una major intensitat de senyal.
+Els algorismes de proximitat es solen utilitzar a entorns amb gran quantitat d'antenes que formen una xarxa o cel·les, com poden ser la tencnologia GSM. En aquests algorismes, quan una antena detecta dispositiu a localitzar, es considera que esta col·locat en "ella". En el cas de que diverses antenes detectin el dispositiu, es considera que es troba col·locat en l'antena del qual rep una major intensitat de senyal.
 
 \subsubsection{Sistemes existents segons tecnologia sense fils}
 
-A l'hora de dissenyar un sistema de localització sense fils existeixen dues aproximacions: desenvolupar la infraestructura de senyalització o aprofitar les fonts existents. El primer cas presenta l'avantatge de tenir control sobre la localització de les fonts, pel que existeix la possibilitat d'obtenir resultats més precisos. En el segon cas, l'avantatge és l'estalvi en temps i cost de muntar una infraestructura pròpia, encara que es necessiten algoritmes més complexos que compensin l'error que pot suposar no conèixer la localització de les fonts.
+A l'hora de dissenyar un sistema de localització sense fils existeixen dues aproximacions: desenvolupar la infraestructura de senyalització o aprofitar les fonts existents. El primer cas presenta l'avantatge de tenir control sobre la localització de les fonts, pel que existeix la possibilitat d'obtenir resultats més precisos. En el segon cas, l'avantatge és l'estalvi en temps i cost de muntar una infraestructura pròpia, encara que es necessiten algorismes més complexos que compensin l'error que pot suposar no conèixer la localització de les fonts.
 
 A continuació s'enumeren algunes de les tecnologies sense fils emprades en els sistemes de localització \cite{liu}:
 
@@ -150,7 +150,7 @@ El sistema COMPASS \cite{king} va ser desenvolupat a partir de la feina prèvia 
 
 Els estudis duts a terme per Rogoleva \cite{rogoleva} i Bolliger \cite{bolliger} són interessants per l’aproximació que duen a terme per construir el mapa de ràdio de manera col·laborativa. En ells, es proposa l’ajustament continuu del mapa de ràdio amb els valors mesurats pels diversos usuaris del sistema. Aquest mapa és considerat com un dels més massius i acurats.
 
-L'estudi exposat per García-Valverde et al. \cite{garcia} proposa un sistema d'aprenentatge que permeti minimitzar l'error i localitzar amb precisió sense necessitat d'una infraestructura pròpia. Alguns d'aquests errors poden ser minimitzats utilitzant algunes tècniques de preprocessament.  Per tractar amb informació inexacta o amb la incertesa, proposen l'ús addicional d'algoritmes de lògica difusa. El mètode utilitza la informació de punts emissors existents, no propis, sobre el que es duu a terme un entrenament de l'ordre de dies. A més, el sistema aprèn incrementalment durant tot el seu cicle de vida, pel que és adaptable al llarg del temps en quant a variacions en l’entorn.
+L'estudi exposat per García-Valverde et al. \cite{garcia} proposa un sistema d'aprenentatge que permeti minimitzar l'error i localitzar amb precisió sense necessitat d'una infraestructura pròpia. Alguns d'aquests errors poden ser minimitzats utilitzant algunes tècniques de preprocessament.  Per tractar amb informació inexacta o amb la incertesa, proposen l'ús addicional d'algorismes de lògica difusa. El mètode utilitza la informació de punts emissors existents, no propis, sobre el que es duu a terme un entrenament de l'ordre de dies. A més, el sistema aprèn incrementalment durant tot el seu cicle de vida, pel que és adaptable al llarg del temps en quant a variacions en l’entorn.
 
 Battiti et al. \cite{battiti} proposen un sistema de localització per WiFi que utilitza un classificador basat en xarxes neuronals. Amb aquest sistema s'aconsegueix una precisió d'1 metre amb una probabilitat del 72%.
 
@@ -165,7 +165,7 @@ Els estudis de Tsuda et al. \cite{tsuda} utilitzen aprenentatge automàtic per c
 
 Molts dels sistemes actuals de localització en interiors, que es basen en tecnologies sense fils com UWB i WLAN, afegeixen correccions mitjançant unitats de mesura inercial (IMU, Inertial measurement unit).
 
-Els sistemes inercials generalment consisteixen en un acceleròmetre, un giroscopi, un magnetòmetre, un convertidor analògic/digital i un microcontrolador o un processador digital de senyal. Amb aquestes eines es pot obtenir la orientació de l’usuari i la seva acceleració que, juntament amb una posició inicial i el temps transcorregut, permet obtenir la nova posició d’aquest. Aquest tipus de sistema genera dades de posició relativa o absoluta, que es combinen amb filtres de partícules o de Kalman \cite{vilaseca}. Algunes solucions integren integració amb altres tècniques com la doble integració \cite{negard}, xarxes neuronals \cite{beauregard} o lògica difusa \cite{tome} \cite{garcia}.
+Els sistemes inercials generalment consisteixen en un acceleròmetre, un giroscopi, un magnetòmetre, un convertidor analògic/digital i un microcontrolador o un processador digital de senyal. Amb aquestes eines es pot obtenir l'orientació de l’usuari i la seva acceleració que, juntament amb una posició inicial i el temps transcorregut, permet obtenir la nova posició d’aquest. Aquest tipus de sistema genera dades de posició relativa o absoluta, que es combinen amb filtres de partícules o de Kalman \cite{vilaseca}. Algunes solucions integren integració amb altres tècniques com la doble integració \cite{negard}, xarxes neuronals \cite{beauregard} o lògica difusa \cite{tome} \cite{garcia}.
 
 El principal problema és que els sensors es poden veure afectats per problemes de precisió, provocats, per exemple, per soroll blanc \cite{vilaseca}. Com que els sistemes inercials calculen la posició actual en base a l'anterior, l’error és acumulatiu. Per tant, les imprecisions de mesura poden augmentar amb la distancia. Inicialment, els dispositius són calibrats pels fabricants, però amb el pas del temps són necessàries nous calibratges o sistemes de localització que implementin mètodes de reposicionament que equilibrin l'error cada cert temps \cite{glancer}.
 
@@ -192,7 +192,7 @@ Es tracta d’un grup d’eines lliure, alliberat amb la llicència GPL v2. El c
 
 \paragraph{Arquitectura}
 
-L'arquitectura proveeix un sistema multicapa en el que en la més inferior es troben els Spotters, els elements que detecten la informació dels sensors. A una capa superior, els Trackers reben la informació de sensorització dels Spotters i la comparen amb les dades dels possibles entrenaments fora de línia, emmagatzemats a elements anomenats Mappers, i infereixen una localització en base a diferents tipus d’algoritmes. Aquesta es passa a un nivell superior en forma d'un element anomenat Estimate, on es troben els adaptadors necessaris perquè hi interactuïn les aplicacions. La comunicació entre capes es porta a terme amb interfícies comunes, independents de dels algorismes implementats.
+L'arquitectura proveeix un sistema multicapa en el que en la més inferior es troben els Spotters, els elements que detecten la informació dels sensors. A una capa superior, els Trackers reben la informació de sensorització dels Spotters i la comparen amb les dades dels possibles entrenaments fora de línia, emmagatzemats a elements anomenats Mappers, i infereixen una localització en base a diferents tipus d’algorismes. Aquesta es passa a un nivell superior en forma d'un element anomenat Estimate, on es troben els adaptadors necessaris perquè hi interactuïn les aplicacions. La comunicació entre capes es porta a terme amb interfícies comunes, independents de dels algorismes implementats.
 
 \subsubsection{AirPlace}
 
@@ -206,6 +206,5 @@ L'AirPlace Tracker és una aplicació d'Android que, en base al mapa de radio ge
 Per tal de fer funcionar l'AirPlace Tracker, s'han de proveir el plànol de l'edifici i el mapa de radio. Es troben disponibles quatre algorismes per estimar la posició: el K nearest neighbor, el weighted k nearest neighbor, el probabilistic maximum a posteriori i el probabilistic minimum mean square error, i es pot alternar entre ells fent servir el menú de l'aplicació.
 El programa disposa de dos modes de funcionament: el mode en línia i el mode fora de línia. El primer situa en el mapa, en temps real, a l'usuari. Al segon se li proveeix un nou mapa de radio, creat amb la combinació dels dos programes anteriors, estima les posicions del nou mapa en base a les dades de potència de senyal i calcula l'error mitjà. Aquest darrer mètode permet l'anàlisi a posteriori de les dades recollides pels experiments de localització.
 
-Es tracta d'un programari desenvolupat a la Universitat de Xipre i redistribuït de manera lliure, sota la llicència GPL versió 2. Això ha suposat un avantatge destacable a l'estudi, ja que per realitzar les proves s'ha hagut de modificar el codi font de AirPlace Tracker.
-
+Es tracta d'un programari desenvolupat a la Universitat de Xipre i redistribuït de manera lliure, sota la llicència GPL versió 2. Això ha suposat un avantatge destacable a l'estudi, ja que per realitzar les proves s'ha hagut de modificar el codi font d'AirPlace Tracker.
 
