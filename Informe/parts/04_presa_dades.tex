@@ -1,6 +1,8 @@
 %Copyright (C) 2014 Sergio García Villalonga.
 
-Per tal de poder dur a terme una avaluació de la influència de la presència d'usuaris en la precisió del sistema de localització en interiors es necessita un lloc que presentàs fortes diferències en el nombre de persones presents a l'entorn. A més, tenint en compte que el sistema AirPlace es basa en la localització mitjançant una infraestructura WiFi existent, l'entorn ha de proveir una quantitat suficient de punts d'accés per dur a terme les nostres operacions.
+L'objectiu principal de l'estudi és investigar com influeix la presència de persones a l'entorn a la hora d'estimar posicions amb un sistema de localització en interiors per WiFi. Avaluades les diferents alternatives, s'ha decidit utilitzar AirPlace, al ser una opció que implementa totes les funcionalitats requerides: creació d'un mapa de ràdio i estimació de les posicions a partir d'aquest.
+
+A més, Per tal de poder dur a terme una avaluació de la influència de la presència d'usuaris en la precisió del sistema de localització en interiors es necessita un lloc que presentàs fortes diferències en el nombre de persones presents a l'entorn. A més, tenint en compte que el sistema AirPlace es basa en la localització mitjançant una infraestructura WiFi existent, l'entorn ha de proveir una quantitat suficient de punts d'accés per dur a terme les operacions.
 
 Aquestes necessitats es veuen cobertes en edificis com els centres comercials. Les proves realitzades per aquest estudi es varen dur a terme en una secció del centre comercial Glòries, a Barcelona. La diferència horària entre l'obertura del centre als treballadors i l'obertura als clients proporciona un context idoni per realitzar proves en un entorn pràcticament buit als matins, i la proximitat de les festes de Nadal a l'hora de realitzar les proves han ofert un entorn molt concorregut durant l'horari comercial.
 
@@ -28,9 +30,9 @@ El primer pas és la creació del mapa de ràdio, que consisteix en recaptar, en
 
 \subsection{Creació del mapa de ràdio}
 
-A l'hora de crear el mapa de ràdio s'han tingut en compte una sèrie de consideracions. La primera és on prendre les mesures per realitzar les mesures. En l'estudi, s'ha intentat realitzar una presa de dades amb punts distribuïts més o menys uniformement per tot l'edifici. La impossibilitat d'obtenir plànols detallats de l'interior de les botigues i el fet de que alguns locals es troben tancats, ha afectat a la uniformitat d'aquesta distribució, situació que no es dóna en les mostres preses als passadissos.
+A l'hora de crear el mapa de ràdio s'han tingut en compte una sèrie de consideracions. La primera és on prendre les mesures per realitzar les mesures. En l'estudi, s'ha realitzat una presa de dades amb punts distribuïts més o menys uniformement per tot l'edifici. La impossibilitat d'obtenir plànols detallats de l'interior de les botigues i el fet de que alguns locals es troben tancats, ha afectat a la uniformitat d'aquesta distribució, situació que no es dóna en les mostres preses als passadissos.
 
-En la figura \ref{fig:planol_log} es pot veure els punts que representen la presa de dades del mapa de ràdio sobre el plànol. En total s'han pres 83 mostres, amb una distància mínima mitjana entre punts de 8,23 m.
+En la figura \ref{fig:planol_log} es poden veure els punts que representen la presa de dades del mapa de ràdio sobre el plànol. En total s'han pres 83 mostres, amb una distància mínima mitjana entre punts de 8,23 m.
 
 \begin{figure}[ht]
 \begin{center}
@@ -41,8 +43,6 @@ En la figura \ref{fig:planol_log} es pot veure els punts que representen la pres
 \end{figure}
 
 Tenint en compte que el mapa de ràdio ha d'enregistrar els valors de les intensitats del senyal amb la màxima precisió possible, i que la presència d'usuaris pot influir en la mesura de la potència de senyal rebut, es va considerar que la presa de dades per construir el mapa de ràdio s'havia de dur a terme en els moments de menys presència en el centre.
-
-El procés de presa de mesures per construir el mapa de ràdio va tenir lloc durant dos dies únicament entre les 8 i les 9 del matí. Dins les botigues, el procés es va dur a terme des del moment d'obertura dels locals comercials i només fins que l'absència de clients permetés una presa de dades convenient (normalment entre 30 i 60 minuts).El nombre de mesures dins botigues varia segons l'àrea ocupada per cada una.
 
 Com que que a l'AirPlace Logger es poden definir la quantitat de mostres a prendre en cada punt a localitzar i l'interval de temps entre mostres, també s'ha de tenir en compte quins valors fixar. Com que el senyal rebut des d'un punt d'accés WiFi fluctua notablement i la potència rebuda mesurada varia al llarg del temps que dur la presa de les mostres, s'ha cregut convenient enregistrar el màxim nombre de mostres possibles, en aquest cas 30. D'aquesta manera s'assegura una millor mostra estadística a l'hora de calcular la potència mitjana. L'interval entre cada mostra s'ha fixat en 1 segon, ja que mig segon entre mostres podria resultar en una mostra poc fluctuant, i dos segons hauria allargat massa el temps de presa de dades.
 
