@@ -82,7 +82,12 @@ A continuació es comenten els resultats obtinguts classificats per algorisme.
 
 \subsection{\textit{K Nearest Neighbors}}
 
-L'algorisme de K Nearest Neighbors estima la posició en dues fases. Primer calcula la distància de la localització a estimar amb les localitzacions del mapa de ràdio basant-se en les dades d'intensitat del senyal de ràdio. Posteriorment, estima la posició calculant la mitja de les K localitzacions del mapa de ràdio més properes.
+L'algorisme de K Nearest Neighbors estima la posició en dues fases:
+
+\begin{enumerate}
+    \item Calcula la distància de la localització a estimar amb cada una de les localitzacions del mapa de ràdio basant-se en les dades d'intensitat del senyal de ràdio.
+    \item Estima la posició calculant la mitja de les K localitzacions del mapa de ràdio més properes.
+\end{enumerate}
 
 Com es pot observar al gràfic (figura \ref{fig:grafic_mitja_KNN}), en el cas de les localitzacions dins botigues, la precisió mitjana en l'entorn sense usuaris és major que en el cas d'un entorn amb clients al voltant. En el cas dels passadissos, la mesura sense usuaris es més precisa fins K=8, a on passa a ser-hi menys, encara que sense gran diferència.
 
@@ -108,7 +113,7 @@ Pel que fa a la desviació mitjana (figura \ref{fig:grafic_desviacio_KNN}) podem
 
 \subsection{\textit{Weighted K Nearest Neighbors}}
 
-L'algorisme Weighted K Nearest Neighbors segueix el mateix funcionament que l'anterior, només que a l'hora de calcular el punt mitjà de les K localitzacions més properes, es fa servir una mitja ponderada, tenint en compte la inversa de la distància. Per tant, a l'hora de realitzar la mitjana els punts de referència més propers tenen més pes que els llunyans, al suposar-se que les mesures de potència del senyal dels primers seran més precises.
+L'algorisme Weighted K Nearest Neighbors segueix el mateix funcionament que l'anterior, només que a l'hora de calcular el punt mitjà de les K localitzacions més properes. La variable utilitzada per ponderar la mitja és la inversa de la distància. Per tant, a l'hora de realitzar la mitjana els punts de referència més propers tenen més pes que els llunyans, al suposar-se que les mesures de potència del senyal dels primers seran més precises.
 
 En el cas de les proves amb l'algorisme \textit{Weighted K Nearest Neighbors}, la tendència és molt similar. Els gràfics (figura \ref{fig:grafic_mitja_WKNN}) mostren clarament com es segueix el mateix patró que amb l'anterior algorisme (figura \ref{fig:grafic_KNN}), encara que amb un error mitjà lleugerament menor.
 
@@ -134,7 +139,7 @@ En el cas de la dispersió de les estimacions (figura \ref{fig:grafic_desviacio_
 
 \subsection{\textit{Probabilistic Maximum A Posteriori}}
 
-Aquest algorisme estima la posició actual de l'usuari com el punt del mapa de ràdio que maximitza la probabilitat a partir de les dades d'intensitat del senyal. Per l'estimació de la probabilitat es fa servir la tècnica del mínim error quadràtic mitjà i el valor és ponderat amb una variable K, que penalitza inversament la probabilitat. D'aquesta manera, un valor baix de K dona com a resultat probabilitats molt similars entre la localització de l'usuari i els punts del mapa de ràdio, fet que pot derivar en que no es pugui determinar la localització.
+Aquest algorisme estima la posició actual de l'usuari com el punt del mapa de ràdio que maximitza la probabilitat a partir de les dades d'intensitat del senyal. Per l'estimació de la probabilitat es fa servir la tècnica del mínim error quadràtic mitjà i el valor és ponderat amb una variable K, que penalitza inversament la probabilitat. D'aquesta manera, un valor baix de K dona com a resultat probabilitats molt similars entre la localització de l'usuari i els punts del mapa de ràdio, fet que pot derivar en que no es pugui estimar la localització.
 
 Realitzant el càlcul amb l'algorisme \textit{Probabilistic Maximum A Posteriori} s'obté un patró diferent als anteriors. Com es pot observar, els valors de l'error mitjà minven conforme augmenta K en tots els casos (figura \ref{fig:grafic_mitja_MAP}). De totes maneres, la precisió no millora constantment, sinó que a partir de certs valors de K (K=8 a passadissos i K=7 en botigues) el valor d'error esdevé constant. De totes maneres, l'error mitjà de localització es veu afectat per la presència de clients tant dins botigues com en passadissos.
 
@@ -160,7 +165,14 @@ Pel que fa a la desviació mitjana de les estimacions \ref{fig:grafic_desviacio_
 
 \subsection{\textit{Probabilistic Minimum Mean Square Error}}
 
-En l'algorisme \textit{Probabilistic Minimum Mean Square Error} es duu a terme una estimació en dos passos. Primer es calcula la probabilitat de que l'usuari es trobi en cada un dels punts del mapa de ràdio de la mateixa manera que en l'algorisme anterior. Posteriorment es calcula la posició de l'usuari com la mitjana ponderada dels punts del mapa de ràdio, utilitzant la probabilitat de que l'usuari es trobi a un punt com a variable de ponderació. Aquest algoritme, per tant, també es veu afectat per la variable K, de manera que a l'hora de calcular la mitjana ponderada, els punts amb més probabilitat tenen més pes.
+En l'algorisme \textit{Probabilistic Minimum Mean Square Error} es duu a terme una estimació en dos passos:
+
+\begin{enumerate}
+    \item alcula la probabilitat de que l'usuari es trobi en cada un dels punts del mapa de ràdio de la mateixa manera que en l'algorisme anterior.
+    \item Es calcula la posició de l'usuari com la mitjana ponderada dels punts del mapa de ràdio, utilitzant la probabilitat de que l'usuari es trobi a un punt com a variable de ponderació.
+\end{enumerate}
+
+Aquest algoritme, per tant, també es veu afectat per la variable K, de manera que a l'hora de calcular la mitjana ponderada, els punts amb més probabilitat tenen més pes.
 
 En aquest darrer cas, l'anàlisi mostra un comportament similar a l'anterior però amb particularitats. A l'igual que amb l'algorisme \textit{Probabilistic Maximum A Posteriori}, a partir de cert valor de K (K=6 en passadissos i K=5 dins botigues), l'error mitjà s'estabilitza. Aquesta estabilització es deu a que els valors alts de K afavoreixen les estimacions amb més probabilitat.
 
