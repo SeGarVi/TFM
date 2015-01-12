@@ -12,7 +12,7 @@ A continuació s'exposen els detalls de la presa de dades i els resultats obting
 
 \subsection{Presa de dades de prova}
 
-La presa de dades per realitzar un anàlisi "off-line" de localitzacions en interior amb l'AirPlace Tracker comença amb la creació d'un mapa de prova utilitzant l'AirPlace Logger. Per aquest estudi en concret, se n'han creat dos, a les mateixes localitzacions però en diferents contexts, un en absència d'altres usuaris i un altre en la situació contrària. Per assegurar que per ambdós mapes s'enregistressin dades a les mateixes localitzacions es varen triar posicions amb alguna particularitat, com localitzacions just a les portes dels negocis, o amb certs patrons de les rajoles.
+La presa de dades per realitzar un anàlisi ``off-line'' de localitzacions en interior amb l'AirPlace Tracker comença amb la creació d'un mapa de prova utilitzant l'AirPlace Logger. Per aquest estudi en concret, se n'han creat dos, a les mateixes localitzacions però en diferents contexts, un en absència d'altres usuaris i un altre en la situació contrària. Per assegurar que per ambdós mapes s'enregistressin dades a les mateixes localitzacions es varen triar posicions amb alguna particularitat, com localitzacions just a les portes dels negocis, o amb certs patrons de les rajoles.
 
 La recollida de dades amb una presència mínima a l'entorn (figura \ref{fig:foto_buit}) es va dur a terme en un context similar a la de la creació del mapa de ràdio: a partir de les 8 del matí pels passadissos i a partir de les 10 dins les botigues. Pel segon mapa de proves, les dades es varen recol·lectar els dies 20 i 21 de desembre de 2014 a la tarda. Com s'aprecia a la figura \ref{fig:foto_ple}, en el segon l'ocupació del centre és major.
 
@@ -44,7 +44,7 @@ En ambdós contexts, s'han pres mostres a 115 diferents posicions, (figura \ref{
 
 \subsection{Estimació de les localitzacions de prova}
 
-Per tal de realitzar un anàlisi detallat de les dades generades amb el mode "off-line" es proporcionen a l'AirPlace Tracker els mapes de prova generats anteriorment. Utilitzant el mapa de ràdio generat inicialment realitza les estimacions de cada una de les posicions de prova, tenint en compte la intensitat del senyal a cada una. Aquesta operació es pot realitzar repetidament i amb diferents algorismes, pel que ens permet estudiar de manera més detallada la influència d'usuaris a l'entorn.
+Per tal de realitzar un anàlisi detallat de les dades generades amb el mode "off-line" es proporcionen a l'AirPlace Tracker els mapes de prova generats anteriorment. Utilitzant el mapa de ràdio generat inicialment realitza les estimacions de cada una de les posicions de prova, tenint en compte la intensitat del senyal a cada una. Aquesta operació es pot realitzar repetidament i amb diferents algorismes, pel que permet estudiar de manera més detallada la influència d'usuaris a l'entorn.
 
 Tantmateix, el funcionament del mode "off-line" només proporciona, al final de l'execució de les estimacions, l'error mitjà de les posicions calculades respecte a les posicions reals del mapa de prova. Aquesta informació és mostrada en forma de finestra de diàleg en la mateixa aplicació (figura \ref{fig:analisi_offline_defecte}).
 
@@ -86,10 +86,10 @@ L'algorisme de K Nearest Neighbors estima la posició en dues fases:
 
 \begin{enumerate}
     \item Calcula la distància de la localització a estimar amb cada una de les localitzacions del mapa de ràdio basant-se en les dades d'intensitat del senyal de ràdio.
-    \item Estima la posició calculant la mitja de les K localitzacions del mapa de ràdio més properes.
+    \item Estima la posició calculant la mitjana de les K localitzacions del mapa de ràdio més properes.
 \end{enumerate}
 
-Com es pot observar al gràfic (figura \ref{fig:grafic_mitja_KNN}), en el cas de les localitzacions dins botigues, la precisió mitjana en l'entorn sense usuaris és major que en el cas d'un entorn amb clients al voltant. En el cas dels passadissos observam un resultat particular. La mesura sense usuaris es més precisa fins K=8. Per valors majors, la l'error mitjà passa a ser menor en un entorn amb usuaris al voltant.
+Com es pot observar al gràfic (figura \ref{fig:grafic_mitja_KNN}), en el cas de les localitzacions dins botigues, la precisió mitjana en l'entorn sense usuaris és major que en el cas d'un entorn amb clients al voltant. En el cas dels passadissos observam un resultat particular. La mesura sense usuaris és més precisa fins K=8. Per valors majors, la l'error mitjà passa a ser menor en un entorn amb usuaris al voltant.
 
 Segurament aquest efecte sigui degut a que els usuaris esdevenen obstacles per senyals de fonts més llunyanes, més visibles als passadissos, pel que els senyals propers guanyen pes a l'hora de calcular la mitjana.
 
@@ -115,7 +115,7 @@ Pel que fa a la desviació mitjana (figura \ref{fig:grafic_desviacio_KNN}) podem
 
 \subsection{\textit{Weighted K Nearest Neighbors}}
 
-L'algorisme Weighted K Nearest Neighbors segueix el mateix funcionament que l'anterior, amb la diferència de que a l'hora de calcular el punt mitjà de les K localitzacions més properes. La variable utilitzada per ponderar la mitja és la inversa de la distància. Per tant, a l'hora de realitzar la mitjana els punts de referència més propers tenen més pes que els llunyans, al suposar-se que les mesures de potència del senyal dels primers seran més precises.
+L'algorisme Weighted K Nearest Neighbors segueix el mateix funcionament que l'anterior, amb la diferència de que a l'hora de calcular el punt mitjà de les K localitzacions més properes. La variable utilitzada per ponderar la mitjana és la inversa de la distància. Per tant, a l'hora de realitzar la mitjana els punts de referència més propers tenen més pes que els llunyans, al suposar-se que les mesures de potència del senyal dels primers seran més precises.
 
 En el cas de les proves amb l'algorisme \textit{Weighted K Nearest Neighbors}, la tendència és molt similar. Els gràfics (figura \ref{fig:grafic_mitja_WKNN}) mostren clarament com es segueix el mateix patró que amb l'anterior algorisme (figura \ref{fig:grafic_mitja_KNN}), encara que amb un error mitjà lleugerament menor.
 
