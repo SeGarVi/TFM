@@ -1,8 +1,8 @@
 %Copyright (C) 2014 Sergio García Villalonga.
 
-L'objectiu principal de l'estudi és investigar com influeix la presència de persones a l'entorn a la hora d'estimar posicions amb un sistema de localització en interiors per WiFi. Avaluades les diferents alternatives, s'ha decidit utilitzar AirPlace, al ser una opció que implementa totes les funcionalitats requerides: creació d'un mapa de ràdio i estimació de les posicions a partir d'aquest.
+L'objectiu principal de l'estudi és investigar com influeix la presència de persones a l'entorn a la hora d'estimar posicions amb un sistema de localització en interiors per \textit{WiFi}. Avaluades les diferents alternatives, s'ha decidit utilitzar \textit{AirPlace}, al ser una opció que implementa totes les funcionalitats requerides: creació d'un mapa de ràdio i estimació de les posicions a partir d'aquest.
 
-A més, Per tal de poder dur a terme una avaluació de la influència de la presència d'usuaris en la precisió del sistema de localització en interiors es necessita un lloc que presentàs fortes diferències en el nombre de persones presents a l'entorn. A més, tenint en compte que el sistema AirPlace es basa en la localització mitjançant una infraestructura WiFi existent, l'entorn ha de proveir una quantitat suficient de punts d'accés per dur a terme les operacions.
+A més, Per tal de poder dur a terme una avaluació de la influència de la presència d'usuaris en la precisió del sistema de localització en interiors es necessita un lloc que presentàs fortes diferències en el nombre de persones presents a l'entorn. A més, tenint en compte que el sistema \textit{AirPlace} es basa en la localització mitjançant una infraestructura \textit{WiFi} existent, l'entorn ha de proveir una quantitat suficient de punts d'accés per dur a terme les operacions.
 
 Aquestes necessitats es veuen cobertes en edificis com els centres comercials. Les proves realitzades per aquest estudi es varen dur a terme en una secció del centre comercial Glòries, a Barcelona. La diferència horària entre l'obertura del centre als treballadors i l'obertura als clients proporciona un context idoni per realitzar proves en un entorn pràcticament buit als matins, i la proximitat de les festes de Nadal a l'hora de realitzar les proves han ofert un entorn molt concorregut durant l'horari comercial.
 
@@ -26,13 +26,13 @@ Per contra, les botigues proporcionen un context en el que, a priori, la precisi
 
 La realització de les proves dins un centre comercial i l'estudi els resultats dels dos tipus de localitzacions pot permetre, a més d'afrontar possibles millores de la manera més adequada en cada situació, donar un enfocament a una situació més realista que no al realitzar proves planificades dins un entorn controlat com pot ser un laboratori.
 
-El primer pas és la creació del mapa de ràdio, que consisteix en recaptar, en diferents localitzacions, informació sobre quins punts d'accés WiFi es localitzen i amb quina intensitat es capta el senyal. Amb aquesta informació, a l'hora d'estimar una posició a posteriori, s'apliquen diferents algorismes que contrasten la informació del mapa de ràdio amb la informació sobre punts d'accés i intensitats que detecta l'usuari del sistema.
+El primer pas és la creació del mapa de ràdio, que consisteix en recaptar, en diferents localitzacions, informació sobre quins punts d'accés \textit{WiFi} es localitzen i amb quina intensitat es capta el senyal. Amb aquesta informació, a l'hora d'estimar una posició a posteriori, s'apliquen diferents algorismes que contrasten la informació del mapa de ràdio amb la informació sobre punts d'accés i intensitats que detecta l'usuari del sistema.
 
 \subsection{Creació del mapa de ràdio}
 
 A l'hora de crear el mapa de ràdio s'han tingut en compte una sèrie de consideracions. La primera és on prendre les mesures per realitzar les mesures. En l'estudi, s'ha realitzat una presa de dades amb punts distribuïts més o menys uniformement per tot l'edifici. La impossibilitat d'obtenir plànols detallats de l'interior de les botigues i el fet de que alguns locals es troben tancats, ha afectat a la uniformitat d'aquesta distribució, situació que no es dóna en les mostres preses als passadissos.
 
-En la figura \ref{fig:planol_log} es poden veure els punts que representen la presa de dades del mapa de ràdio sobre el plànol. En total s'han pres mostres a 83 localitzacion, amb una distància mínima mitjana entre punts de 8,23 m.
+En la figura \ref{fig:planol_log} es poden veure els punts que representen la presa de dades del mapa de ràdio sobre el plànol. En total s'han pres mostres a 83 localitzacions, amb una distància mínima mitjana entre punts de 8,23 m.
 
 \begin{figure}[ht]
 \begin{center}
@@ -44,9 +44,9 @@ En la figura \ref{fig:planol_log} es poden veure els punts que representen la pr
 
 Tenint en compte que el mapa de ràdio ha d'enregistrar els valors de les intensitats del senyal amb la màxima precisió possible, i que la presència d'usuaris pot influir en la mesura de la potència de senyal rebut, es va considerar que la presa de dades per construir el mapa de ràdio s'havia de dur a terme en els moments de menys presència en el centre.
 
-Com que que a l'AirPlace Logger es poden definir la quantitat de mostres a prendre en cada punt a localitzar i l'interval de temps entre mostres, també s'ha de tenir en compte quins valors fixar. Com que el senyal rebut des d'un punt d'accés WiFi fluctua notablement i la potència rebuda mesurada varia al llarg del temps que dur la presa de les mostres, s'ha cregut convenient enregistrar el màxim nombre de mostres possibles, en aquest cas 30. D'aquesta manera s'assegura una millor mostra estadística a l'hora de calcular la potència mitjana. L'interval entre cada mostra s'ha fixat en 1 segon, ja que mig segon entre mostres podria resultar en una mostra poc fluctuant, i dos segons hauria allargat massa el temps de presa de dades.
+Com que que a l'\textit{AirPlace Logger} es poden definir la quantitat de mostres a prendre en cada punt a localitzar i l'interval de temps entre mostres, també s'ha de tenir en compte quins valors fixar. Com que el senyal rebut des d'un punt d'accés \textit{WiFi} fluctua notablement i la potència rebuda mesurada varia al llarg del temps que dur la presa de les mostres, s'ha cregut convenient enregistrar el màxim nombre de mostres possibles, en aquest cas 30. D'aquesta manera s'assegura una millor mostra estadística a l'hora de calcular la potència mitjana. L'interval entre cada mostra s'ha fixat en 1 segon, ja que mig segon entre mostres podria resultar en una mostra poc fluctuant, i dos segons hauria allargat massa el temps de presa de dades.
 
-A la figura \ref{fig:fluctuacio} es mostra la variació de la potència del senyal rebut en un punt al llarg de les 30 mostres. Com s'observa, en un punt la intensitat rebuda pot variar fins a 15 dbm, el que influeix en la poca precisió dels sistemes de localització per WiFi.
+A la figura \ref{fig:fluctuacio} es mostra la variació de la potència del senyal rebut en un punt al llarg de les 30 mostres. Com s'observa, en un punt la intensitat rebuda pot variar fins a 15 dbm, el que influeix en la poca precisió dels sistemes de localització per \textit{WiFi}.
 
 \begin{figure}[ht]
 \begin{center}

@@ -1,10 +1,10 @@
 %Copyright (C) 2014 Sergio García Villalonga.
 
-A l'hora de realitzar les proves de localització, l'AirPlace Tracker proporciona dos modes: l'on-line i l'off-line. El primer mostra la posició estimada de l'usuari en cada moment. Es tracta d'un sistema molt visual però que no aporta cap tipus de dada que pugui ser analitzada posteriorment.
+A l'hora de realitzar les proves de localització, l'\textit{AirPlace Tracker} proporciona dos modes: l'\textit{on-line} i l'\textit{off-line}. El primer mostra la posició estimada de l'usuari en cada moment. Es tracta d'un sistema molt visual però que no aporta cap tipus de dada que pugui ser analitzada posteriorment.
 
-El mode off-line, per contra, pren un fitxer amb informació sobre diferents localitzacions i la potència del senyal rebut en cada una d'elles. Tècnicament, aquest fitxer es genera de la mateixa manera que el mapa de ràdio inicial, encara que, per evitar confusió, se l'anomenarà mapa de proves.
+El mode \textit{off-line}, per contra, pren un fitxer amb informació sobre diferents localitzacions i la potència del senyal rebut en cada una d'elles. Tècnicament, aquest fitxer es genera de la mateixa manera que el mapa de ràdio inicial, encara que, per evitar confusió, se l'anomenarà mapa de proves.
 
-A partir del mapa de ràdio i de la informació sobre la intensitat del senyal a cada punt del mapa de proves, l'AirPlace Tracker estima la posició de les localitzacions del darrer. L'AirPlace tracker permet dur a terme aquest procés d'estimació amb diferents algorismes.
+A partir del mapa de ràdio i de la informació sobre la intensitat del senyal a cada punt del mapa de proves, l'\textit{AirPlace Tracker} estima la posició de les localitzacions del darrer. L'\textit{AirPlace Tracker} permet dur a terme aquest procés d'estimació amb diferents algorismes.
 
 Aquest procés sí genera una sèrie de dades que poden ser analitzades estadísticament a posteriori. Per tal d'estudiar la influència del nombre d'usuaris en la precisió de la localització s'han generat dos mapes de proves, amb idèntiques localitzacions però preses en dos moments on la diferència d'usuaris fos significativa.
 
@@ -12,7 +12,7 @@ A continuació s'exposen els detalls de la presa de dades i els resultats obting
 
 \subsection{Presa de dades de prova}
 
-La presa de dades per realitzar un anàlisi ``off-line'' de localitzacions en interior amb l'AirPlace Tracker comença amb la creació d'un mapa de prova utilitzant l'AirPlace Logger. Per aquest estudi en concret, se n'han creat dos, a les mateixes localitzacions però en diferents contexts, un en absència d'altres usuaris i un altre en la situació contrària. Per assegurar que per ambdós mapes s'enregistressin dades a les mateixes localitzacions es varen triar posicions amb alguna particularitat, com localitzacions just a les portes dels negocis, o amb certs patrons de les rajoles.
+La presa de dades per realitzar un anàlisi \textit{off-line} de localitzacions en interior amb l'\textit{AirPlace Tracker} comença amb la creació d'un mapa de prova utilitzant l'\textit{AirPlace Logger}. Per aquest estudi en concret, se n'han creat dos, a les mateixes localitzacions però en diferents contexts, un en absència d'altres usuaris i un altre en la situació contrària. Per assegurar que per ambdós mapes s'enregistressin dades a les mateixes localitzacions es varen triar posicions amb alguna particularitat, com localitzacions just a les portes dels negocis, o amb certs patrons de les rajoles.
 
 La recollida de dades amb una presència mínima a l'entorn (figura \ref{fig:foto_buit}) es va dur a terme en un context similar a la de la creació del mapa de ràdio: a partir de les 8 del matí pels passadissos i a partir de les 10 dins les botigues. Pel segon mapa de proves, les dades es varen recol·lectar els dies 20 i 21 de desembre de 2014 a la tarda. Com s'aprecia a la figura \ref{fig:foto_ple}, en el segon l'ocupació del centre és major.
 
@@ -44,28 +44,28 @@ En ambdós contexts, s'han pres mostres a 115 diferents posicions, (figura \ref{
 
 \subsection{Estimació de les localitzacions de prova}
 
-Per tal de realitzar un anàlisi detallat de les dades generades amb el mode "off-line" es proporcionen a l'AirPlace Tracker els mapes de prova generats anteriorment. Utilitzant el mapa de ràdio generat inicialment realitza les estimacions de cada una de les posicions de prova, tenint en compte la intensitat del senyal a cada una. Aquesta operació es pot realitzar repetidament i amb diferents algorismes, pel que permet estudiar de manera més detallada la influència d'usuaris a l'entorn.
+Per tal de realitzar un anàlisi detallat de les dades generades amb el mode \textit{off-line} es proporcionen a l'\textit{AirPlace Tracker} els mapes de prova generats anteriorment. Utilitzant el mapa de ràdio generat inicialment realitza les estimacions de cada una de les posicions de prova, tenint en compte la intensitat del senyal a cada una. Aquesta operació es pot realitzar repetidament i amb diferents algorismes, pel que permet estudiar de manera més detallada la influència d'usuaris a l'entorn.
 
-Tantmateix, el funcionament del mode "off-line" només proporciona, al final de l'execució de les estimacions, l'error mitjà de les posicions calculades respecte a les posicions reals del mapa de prova. Aquesta informació és mostrada en forma de finestra de diàleg en la mateixa aplicació (figura \ref{fig:analisi_offline_defecte}).
+Tanmateix, el funcionament del mode \textit{off-line} només proporciona, al final de l'execució de les estimacions, l'error mitjà de les posicions calculades respecte a les posicions reals del mapa de prova. Aquesta informació és mostrada en forma de finestra de diàleg en la mateixa aplicació (figura \ref{fig:analisi_offline_defecte}).
 
 \begin{figure}[ht]
 \begin{center}
 \includegraphics[width=5cm]{imatges/analisi_offline_defecte.png}
-\caption{Final de l'execució d'un anàlisi off-line d'AirTracker.}
+\caption{Final de l'execució d'un anàlisi \textit{off-line} d'\textit{AirPlace Tracker}.}
 \label{fig:analisi_offline_defecte}
 \end{center}
 \end{figure}
 
 Un altre problema és el temps d'execució de les proves. Depenent de l'algorisme triat i dels paràmetres corresponents, l'anàlisi de l'error mitjà de les estimacions per una quantitat de localitzacions relativament gran porta, aproximadament, una mitjana de 80 minuts. Aquest factor dificulta la realització d'anàlisis per diferents algorismes i paràmetres si es disposa d'un temps limitat.
 
-Per tal de generar resultats més detallats i poder dur a terme un anàlisi estadístic més ric, així com per agilitzar l'execució de les proves, es va decidir realitzar una sèrie de modificacions al codi de l'AirPlace Tracker\footnote{El codi modificat es pot trobar a \url{https://github.com/SeGarVi/TFM}}, aprofitant la seva llicència lliure. Amb aquestes modificacions, l'AirPlace Tracker executa en paral·lel els anàlisis amb diferents algorismes i persisteix els resultats dels anàlisis en forma de fitxers.
+Per tal de generar resultats més detallats i poder dur a terme un anàlisi estadístic més ric, així com per agilitzar l'execució de les proves, es va decidir realitzar una sèrie de modificacions al codi de l'\textit{AirPlace Tracker}\footnote{El codi modificat es pot trobar a \url{https://github.com/SeGarVi/TFM}}, aprofitant la seva llicència lliure. Amb aquestes modificacions, l'\textit{AirPlace Tracker} executa en paral·lel els anàlisis amb diferents algorismes i persisteix els resultats dels anàlisis en forma de fitxers.
 
 D'aquesta manera, els fitxers resultants de l'execució de l'anàlisi contenen informació sobre la posició real de cada localització de prova, la posició estimada, i l'error. Pel que fa a la paral·lelització, al tractar-se d'un telèfon amb un processador multinucli, permet l'execució de l'anàlisi de totes les mostres d'un mapa de proves, amb els quatre algorismes disponibles (figura \ref{fig:analisi_offline_paralel}) simultàniament, en uns 110 minuts de mitjana.
 
 \begin{figure}[ht]
 \begin{center}
 \includegraphics[width=5cm]{imatges/analisi_offline_paralel.png}
-\caption{Execució d'un anàlisi en paral·lel amb AirTracker.}
+\caption{Execució d'un anàlisi en paral·lel amb \textit{AirPlace Tracker}.}
 \label{fig:analisi_offline_paralel}
 \end{center}
 \end{figure}
@@ -80,9 +80,9 @@ De les 30 mostres enregistrades per cada localització als mapes de prova, s'ha 
 
 A continuació es comenten els resultats obtinguts classificats per algorisme.
 
-\subsection{\textit{K Nearest Neighbors}}
+\subsection{\textit{K Nearest Neighbours}}
 
-L'algorisme de K Nearest Neighbors estima la posició en dues fases:
+L'algorisme de \textit{K Nearest Neighbours} estima la posició en dues fases:
 
 \begin{enumerate}
     \item Calcula la distància de la localització a estimar amb cada una de les localitzacions del mapa de ràdio basant-se en les dades d'intensitat del senyal de ràdio.
@@ -98,7 +98,7 @@ Les mesures més precises donen un error mitjà de 8,68 m., en l'entorn sense us
 \begin{figure}[ht]
 \begin{center}
 \includegraphics[width=7cm]{imatges/knn_mitja.png}
-\caption{Comparació gràfica de l'error mitjà per l'algorisme \textit{K Nearest Neighbors} funció de K.}
+\caption{Comparació gràfica de l'error mitjà per l'algorisme \textit{K Nearest Neighbours} funció de K.}
 \label{fig:grafic_mitja_KNN}
 \end{center}
 \end{figure}
@@ -108,23 +108,23 @@ Pel que fa a la desviació mitjana (figura \ref{fig:grafic_desviacio_KNN}) podem
 \begin{figure}[ht]
 \begin{center}
 \includegraphics[width=7cm]{imatges/knn_desviacio.png}
-\caption{Comparació gràfica de la desviació mitjana per l'algorisme \textit{K Nearest Neighbors} funció de K.}
+\caption{Comparació gràfica de la desviació mitjana per l'algorisme \textit{K Nearest Neighbours} funció de K.}
 \label{fig:grafic_desviacio_KNN}
 \end{center}
 \end{figure}
 
-\subsection{\textit{Weighted K Nearest Neighbors}}
+\subsection{\textit{Weighted K Nearest Neighbours}}
 
-L'algorisme Weighted K Nearest Neighbors segueix el mateix funcionament que l'anterior, amb la diferència de que a l'hora de calcular el punt mitjà de les K localitzacions més properes. La variable utilitzada per ponderar la mitjana és la inversa de la distància. Per tant, a l'hora de realitzar la mitjana els punts de referència més propers tenen més pes que els llunyans, al suposar-se que les mesures de potència del senyal dels primers seran més precises.
+L'algorisme \textit{Weighted K Nearest Neighbours} segueix el mateix funcionament que l'anterior, amb la diferència de que a l'hora de calcular el punt mitjà de les K localitzacions més properes. La variable utilitzada per ponderar la mitjana és la inversa de la distància. Per tant, a l'hora de realitzar la mitjana els punts de referència més propers tenen més pes que els llunyans, al suposar-se que les mesures de potència del senyal dels primers seran més precises.
 
-En el cas de les proves amb l'algorisme \textit{Weighted K Nearest Neighbors}, la tendència és molt similar. Els gràfics (figura \ref{fig:grafic_mitja_WKNN}) mostren clarament com es segueix el mateix patró que amb l'anterior algorisme (figura \ref{fig:grafic_mitja_KNN}), encara que amb un error mitjà lleugerament menor.
+En el cas de les proves amb l'algorisme \textit{Weighted K Nearest Neighbours}, la tendència és molt similar. Els gràfics (figura \ref{fig:grafic_mitja_WKNN}) mostren clarament com es segueix el mateix patró que amb l'anterior algorisme (figura \ref{fig:grafic_mitja_KNN}), encara que amb un error mitjà lleugerament menor.
 
 Les mesures més exactes donen un error de 8,61 m. en un entorn sense altres usuaris i un error de 9,68 m. en l'entorn amb molta presència de clients.
 
 \begin{figure}[ht]
 \begin{center}
 \includegraphics[width=7cm]{imatges/wknn_mitja.png}
-\caption{Comparació gràfica de l'error mitjà per l'algorisme \textit{Weighted K Nearest Neighbors} funció de K.}
+\caption{Comparació gràfica de l'error mitjà per l'algorisme \textit{Weighted K Nearest Neighbours} funció de K.}
 \label{fig:grafic_mitja_WKNN}
 \end{center}
 \end{figure}
@@ -134,7 +134,7 @@ En el cas de la dispersió de les estimacions (figura \ref{fig:grafic_desviacio_
 \begin{figure}[ht]
 \begin{center}
 \includegraphics[width=7cm]{imatges/wknn_desviacio.png}
-\caption{Comparació gràfica de la desviació mitjana per l'algorisme \textit{Weighted K Nearest Neighbors} funció de K.}
+\caption{Comparació gràfica de la desviació mitjana per l'algorisme \textit{Weighted K Nearest Neighbours} funció de K.}
 \label{fig:grafic_desviacio_WKNN}
 \end{center}
 \end{figure}

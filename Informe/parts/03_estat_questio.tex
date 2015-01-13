@@ -1,6 +1,6 @@
 %Copyright (C) 2014 Sergio García Villalonga.
 
-L’estudi del posicionament ha estat llargament estudiat. Malgrat existeixen tecnologies que permeten dur a terme tasques de localització en exterior molt precises, com el GPS, aquestes són inviables dins edificis, ja que depenen d’una línia de visió directa amb els corresponents satèl·lits.
+L’estudi del posicionament ha estat llargament estudiat. Malgrat existeixen tecnologies que permeten dur a terme tasques de localització en exterior molt precises, com el \textit{GPS}, aquestes són inviables dins edificis, ja que depenen d’una línia de visió directa amb els corresponents satèl·lits.
 
 Les tècniques utilitzades per dur a terme sistemes de posicionament en interiors són molt variades, com els  sistemes basats en anàlisi d’imatges de càmeres \cite{martinez} \cite{mulloni}, anàlisi del moviment de l’usuari o anàlisi de les propietats de les ones emeses per diversos dispositius. S’ha de tenir en compte, però, que depenent de la tecnologia, com els sistemes de càmeres, els problemes de privacitat inherents a qualsevol sistema de localització es poden veure incrementats, pel que haurien d’evitar-se \cite{garcia}.
 
@@ -27,22 +27,22 @@ La triangulació basa els seus mètodes en el coneixement de la posició de les 
     \item \textbf{Lateració}: s'estima la posició calculant el punt d’intersecció dels senyals provinents de diferents fonts. Es fan servir diferents mètriques:
 
     \begin{itemize}
-        \item \textbf{TOA} (time of arrival, temps d'arribada): calcula la distància tenint en compte el moment de partida del senyal i el moment d'arribada. Aquest mètode es veu afectat per dos problemes: tots els transmissors han d'estar fortament sincronitzats i s'ha d'afegir informació temporal (timestamp) al senyal.
-        \item \textbf{TDOA} (time difference of arrival, diferència del temps d'arribada): la idea del TDOA és calcular la diferència temporal en què el senyal arriba des de diferents fonts d’emisió, en comptes del temps absolut d'arribada del TOA. La localització pot ser estimada amb la intersecció de dos o més mesures de TDOA.
-        \item \textbf{RTOF} (roundtrip time of flight, temps d'anada i tornada): utilitza el temps de transmissió del senyal, encara que suma tant el temps d'anada com el de tornada, i elimina la necessitat de sincronització forta del TOA. Tot i així, el dispositiu a localitzar pot afegir un retard a la resposta, cosa que esdevé un problema al poder ser variable i dependre del dispositiu. En casos de mesura de distàncies curtes, l'error pot ser considerable.
-        \item \textbf{CN} (closest neighbour, veí més proper): assumeix la localització de l’usuari com la del punt de referència més proper a aquest.
-        \item \textbf{RSS} (received signal strengh, intensitat del senyal rebut): els anteriors mètodes necessiten una línia de visibilitat directa entre els transmissors i l'usuari, i el senyal es pot veure afectat per fenòmens físics com la reflexió. Aquest mètode tracta de calcular la pèrdua de força del senyal causada per la seva propagació. El principal inconvenient és l'atenuació del senyal degut a obstacles.
-        \item \textbf{Received signal phase method} (mètode de la fase de senyal rebut): aquest mètode també rep el nom de POA (phase of arrival, fase d'arribada). Utilitza la fase de l'ona portadora, i assumeix que les ones emeses són ones sinusoidals pures, de la mateixa freqüència i sense cap tipus de compensació (offset) inicial. La fase del senyal rebut des de diferents punts emissors permet estimar la posició. El principal problema d'aquest mètode són els obstacles i fenòmens com la reflexió. Necessita una línia de visió directa.
+        \item \textbf{\textit{TOA}} (\textit{time of arrival}, temps d'arribada): calcula la distància tenint en compte el moment de partida del senyal i el moment d'arribada. Aquest mètode es veu afectat per dos problemes: tots els transmissors han d'estar fortament sincronitzats i s'ha d'afegir informació temporal (\textit{timestamp}) al senyal.
+        \item \textbf{\textit{TDOA}} (\textit{time difference of arrival}, diferència del temps d'arribada): la idea del \textit{TDOA} és calcular la diferència temporal en què el senyal arriba des de diferents fonts d’emisió, en comptes del temps absolut d'arribada del \textit{TOA}. La localització pot ser estimada amb la intersecció de dos o més mesures de \textit{TDOA}.
+        \item \textbf{\textit{RTOF}} (\textit{roundtrip time of flight}, temps d'anada i tornada): utilitza el temps de transmissió del senyal, encara que suma tant el temps d'anada com el de tornada, i elimina la necessitat de sincronització forta del \textit{TOA}. Tot i així, el dispositiu a localitzar pot afegir un retard a la resposta, cosa que esdevé un problema al poder ser variable i dependre del dispositiu. En casos de mesura de distàncies curtes, l'error pot ser considerable.
+        \item \textbf{\textit{CN}} (\textit{closest neighbour}, veí més proper): assumeix la localització de l’usuari com la del punt de referència més proper a aquest.
+        \item \textbf{\textit{RSS}} (\textit{received signal strengh}, intensitat del senyal rebut): els anteriors mètodes necessiten una línia de visibilitat directa entre els transmissors i l'usuari, i el senyal es pot veure afectat per fenòmens físics com la reflexió. Aquest mètode tracta de calcular la pèrdua de força del senyal causada per la seva propagació. El principal inconvenient és l'atenuació del senyal degut a obstacles.
+        \item \textbf{\textit{Received signal phase method}} (mètode de la fase de senyal rebut): aquest mètode també rep el nom de \textit{POA} (\textit{phase of arrival}, fase d'arribada). Utilitza la fase de l'ona portadora, i assumeix que les ones emeses són ones sinusoidals pures, de la mateixa freqüència i sense cap tipus de compensació (\textit{offset}) inicial. La fase del senyal rebut des de diferents punts emissors permet estimar la posició. El principal problema d'aquest mètode són els obstacles i fenòmens com la reflexió. Necessita una línia de visió directa.
 
     \end{itemize}
 
-    \item \textbf{Angulació}: s’aplica la tècnica d’AOA (angle of arrival, angle d'arribada) amb la que localització es pot trobar mitjançant la intersecció de diverses línies de vectors angulars, cada un format pel radi circular des de l'estació base fins al dispositiu usuari. Aquesta tècnica té l'avantatge de necessitar només dues estacions base, com a mínim, per trobar un punt en una localització bidimensional (o tres per a una localització tridimensional) \cite{liu} i de que no es necessita cap tipus de sincronització temporal. Per contra, es necessiten o antenes direccionals, o una matriu d'antenes (pel que els requeriments de maquinari són més complexes) i que la precisió de la localització minva amb la distància.
+    \item \textbf{Angulació}: s’aplica la tècnica d’\textit{AOA} (\textit{angle of arrival}, angle d'arribada) amb la que localització es pot trobar mitjançant la intersecció de diverses línies de vectors angulars, cada un format pel radi circular des de l'estació base fins al dispositiu usuari. Aquesta tècnica té l'avantatge de necessitar només dues estacions base, com a mínim, per trobar un punt en una localització bidimensional (o tres per a una localització tridimensional) \cite{liu} i de que no es necessita cap tipus de sincronització temporal. Per contra, es necessiten o antenes direccionals, o una matriu d'antenes (pel que els requeriments de maquinari són més complexes) i que la precisió de la localització minva amb la distància.
     
 \end{itemize}
 
 \paragraph{Reconeixement de patrons}
 
-Els algorismes de reconeixement de patrons es divideixen en dues fases. En la primera, la fase fora de línia (offline), es porta a terme un anàlisi de l'intensitat rebuda des de les fonts de senyals fins a certs punts. El resultat és l’anomenat mapa de ràdio, on es relacionen aquestes dades. Posteriorment, en la fase en línia (online), s'estima la localització de l'usuari cercant patrons entre les dades mesurades ''en viu'' i les empremtes enregistrades anteriorment.
+Els algorismes de reconeixement de patrons es divideixen en dues fases. En la primera, la fase fora de línia (\textit{offline}), es porta a terme un anàlisi de l'intensitat rebuda des de les fonts de senyals fins a certs punts. El resultat és l’anomenat mapa de ràdio, on es relacionen aquestes dades. Posteriorment, en la fase en línia (\textit{online}), s'estima la localització de l'usuari cercant patrons entre les dades mesurades ''en viu'' i les empremtes enregistrades anteriorment.
 
 El principal problema que afronten aquests algorismes és que, en un mateix punt, al llarg del temps, pot fluctuar notablement, pel que la decisió del nombre de punts de referència i la quantitat d'enregistraments del senyal en cada un no és trivial \cite{bagosi}
 Podem diferenciar cinc tipus de mètodes d'aquest tipus:
@@ -50,16 +50,16 @@ Podem diferenciar cinc tipus de mètodes d'aquest tipus:
 \begin{itemize}
 
     \item \textbf{Mètodes probabilístics}: la localització s'infereix segons la probabilitat de que el senyal rebut sigui a un punt en concret. S'utilitzen diversos mètodes probabilístics com la formula de Bayes, filtres de Kalman\cite{glanzer}, filtres de partícules o el mètode del model de Markov ocult \cite{evennou}. També s'utilitzen dades de desviació estàndard per dur a terme una aproximació més acurada.
-    \item \textbf{kNN} (k nearest neighbours): les dades de posicionament en línia permeten trobar els k punts de referència més propers. La mitjana d'aquests permet dur a terme una estimació. Si la mitjana es pondera amb les dades d'intensitat del senyal rebut es pot obtenir una estimació més acurada.
+    \item \textbf{\textit{kNN}} (\textit{k nearest neighbours}): les dades de posicionament en línia permeten trobar els k punts de referència més propers. La mitjana d'aquests permet dur a terme una estimació. Si la mitjana es pondera amb les dades d'intensitat del senyal rebut es pot obtenir una estimació més acurada.
     \item \textbf{Xarxes neuronals}: les mesures de la fase fora de línia serveixen com a dades d'entrenament dels pesos d'una xarxa neuronal artificial.
-    \item \textbf{SVM} (support vector machines): es tracta d'una eina de classificació i regressió de dades, a partir de tècniques d’aprenentatge supervisat.
-    \item \textbf{SMP} (smallest M-vertex polygon): s'utilitzen les dades en línia per cercar punts candidats, i es forma un polígon mínim, amb el qual es calcula una aproximació de la localització com a la mitjana de la posició dels vèrtex.
+    \item \textbf{\textit{SVM}} (\textit{support vector machines}): es tracta d'una eina de classificació i regressió de dades, a partir de tècniques d’aprenentatge supervisat.
+    \item \textbf{\textit{SMP}} (\textit{smallest M-vertex polygon}): s'utilitzen les dades en línia per cercar punts candidats, i es forma un polígon mínim, amb el qual es calcula una aproximació de la localització com a la mitjana de la posició dels vèrtex.
 
 \end{itemize}
 
 \paragraph{Proximitat}
 
-Els algorismes de proximitat es solen utilitzar a entorns amb gran quantitat d'antenes que formen una xarxa o cel·les, com poden ser la tencnologia GSM. En aquests algorismes, quan una antena detecta un dispositiu a localitzar, es considera que esta col·locat en ``ella'' En el cas de que diverses antenes detectin el dispositiu, es considera que es troba col·locat en l'antena del qual rep una major intensitat de senyal.
+Els algorismes de proximitat es solen utilitzar a entorns amb gran quantitat d'antenes que formen una xarxa o cel·les, com poden ser la tecnologia \textit{GSM}. En aquests algorismes, quan una antena detecta un dispositiu a localitzar, es considera que esta col·locat en ``ella'' En el cas de que diverses antenes detectin el dispositiu, es considera que es troba col·locat en l'antena del qual rep una major intensitat de senyal.
 
 \subsubsection{Sistemes existents segons tecnologia sense fils}
 
@@ -67,19 +67,19 @@ A l'hora de dissenyar un sistema de localització sense fils existeixen dues apr
 
 A continuació s'enumeren algunes de les tecnologies sense fils emprades en els sistemes de localització \cite{liu}:
 
-\paragraph{GPS}
+\paragraph{\textit{GPS}}
 
-El GPS és un sistema de localització militar americà amb ús civil. El seu funcionament es basa en l’ús de satèl·lits geoestacionaris que contínuament emeten missatges amb informació espaciotemporal amb els que els receptors triangulen la seva posició. Es tracta d’un sistema molt precís en exteriors, però on la poca capacitat de penetració del senyal del satèl·lit fa que perdi la seva eficiència en interiors.
+El \textit{GPS} és un sistema de localització militar americà amb ús civil. El seu funcionament es basa en l’ús de satèl·lits geoestacionaris que contínuament emeten missatges amb informació espai-temporal amb els que els receptors triangulen la seva posició. Es tracta d’un sistema molt precís en exteriors, però on la poca capacitat de penetració del senyal del satèl·lit fa que perdi la seva eficiència en interiors.
 
-Tot i així, s'han desenvolupat solucions per tal de localitzar en interiors utilitzant aquesta tecnologia. SnapTrack\cite{moeglein} fa servir una solució híbrida (GPS + Wireless), Atmel\cite{liu} i U-Blox \cite{wieser} fan servir una tecnologia pròpia de detecció de senyals GPS de baixa intensitat, i Locata \cite{barnes} fa servir un receptor propi, del qual s'instal·len una quantitat determinada formant una xarxa.
+Tot i així, s'han desenvolupat solucions per tal de localitzar en interiors utilitzant aquesta tecnologia. \textit{SnapTrack}\cite{moeglein} fa servir una solució híbrida (\textit{GPS} + \textit{WiFi}), \textit{Atmel}\cite{liu} i \textit{U-Blox} \cite{wieser} fan servir una tecnologia pròpia de detecció de senyals \textit{GPS} de baixa intensitat, i Locata \cite{barnes} fa servir un receptor propi, del qual s'instal·len una quantitat determinada formant una xarxa.
 
-\paragraph{RFID}
+\paragraph{\textit{RFID}}
 
-RFID és un sistema de transmissió de dades per radio freqüència que consta d'etiquetes (actives o passives), que emeten dades, i els receptors, que les llegeixen. Les etiquetes actives són capaces d’emetre informació per sí mateixes, encara que necessiten una font d'energia suplementària. Les etiquetes passives no emeten informació per si mateixes, sino que aprofiten l'energia del senyal emès per un receptor situat a prop seu.
+\textit{RFID} és un sistema de transmissió de dades per radio freqüència que consta d'etiquetes (actives o passives), que emeten dades, i els receptors, que les llegeixen. Les etiquetes actives són capaces d’emetre informació per sí mateixes, encara que necessiten una font d'energia suplementària. Les etiquetes passives no emeten informació per si mateixes, sino que aprofiten l'energia del senyal emès per un receptor situat a prop seu.
 
 Un dels avantatges és que operen a diferents rangs de freqüències pel que es poden veure menys afectades per interferències. El principal problema és que el seu radi d'acció és petit (uns 2 metres les passives i uns 100 metres les actives \cite{chan}) i es necessita una infraestructura amb gran quantitat d'etiquetes.
 
-Algunes tecnologies que utilitzen RFID són SpotON \cite{hightower} i LANDMARK \cite{ni}.
+Algunes tecnologies que utilitzen \textit{RFID} són \textit{SpotON} \cite{hightower} i \textit{LANDMARK} \cite{ni}.
 
 \paragraph{Xarxes cel·lulars}
 
@@ -87,83 +87,83 @@ Algunes tecnologies de posicionament fan servir les antenes de xarxes cel·lular
 
 Les propostes de localització en interiors mitjançant aquesta tecnologia solen ser experimentals, sense trobar cap aplicació comercial coneguda, com les proposades per Otsason et al. \cite{otsason}.
 
-\paragraph{UWB}
+\paragraph{\textit{UWB}}
 
-UWB (Ultra Wide Band, banda ultra ampla), és una tecnologia similar al RFID, però basada en l'emissió de pulsacions ultracurtes. Els seus avantatges respecte al primer són la transmissió (a la vegada) sobre diverses bandes de freqüència, sobre una amplada de l'espectre de ràdio major, menor consum d'energia, tolerància a l'arribada d'ones per diferents camins i capacitat de penetració superior. La curtor de les pulsacions permet una determinació molt precisa del TOA.
+\textit{UWB} (\textit{Ultra Wide Band}, banda ultra ampla), és una tecnologia similar al \textit{RFID}, però basada en l'emissió de pulsacions ultracurtes. Els seus avantatges respecte al primer són la transmissió (a la vegada) sobre diverses bandes de freqüència, sobre una amplada de l'espectre de ràdio major, menor consum d'energia, tolerància a l'arribada d'ones per diferents camins i capacitat de penetració superior. La curtor de les pulsacions permet una determinació molt precisa del \textit{TOA}.
 
-Alguns sistemes de localització utilitzant UWB són Ultrawideband Planet\footnote{\url{http://www.ultrawidebandplanet.com}}, UbiSense\footnote{\url{http://www.ubisense.net}} i Aether Wire \& Location\footnote{\url{http://www.aetherwire.com}}.
+Alguns sistemes de localització utilitzant \textit{UWB} són \textit{Ultrawideband Planet}\footnote{\url{http://www.ultrawidebandplanet.com}}, \textit{UbiSense}\footnote{\url{http://www.ubisense.net}} i \textit{Aether Wire \& Location}\footnote{\url{http://www.aetherwire.com}}.
 
-\paragraph{Bluetooth (IEEE 802.15)}
+\paragraph{\textit{Bluetooth} (IEEE 802.15)}
 
-Bluetooth és una tecnologia estandarditzada de transmissió de dades que opera en la banda de freqüència dels 2,4 GHz. Antigament, el seu principal avantatge era que molts de dispositius mòbils estaven equipats amb Bluetooth com a tecnologia de transmissió de dades, encara que actualment els dispositius mòbils es solen equipar amb tecnologies que permeten una velocitat de transmissió molt major (sobretot WLAN). A més, el seu principal inconvenient és el seu curt rang d'acció (de 10 a 15 metres).
+\textit{Bluetooth} és una tecnologia estandarditzada de transmissió de dades que opera en la banda de freqüència dels 2,4 GHz. Antigament, el seu principal avantatge era que molts de dispositius mòbils estaven equipats amb \textit{Bluetooth} com a tecnologia de transmissió de dades, encara que actualment els dispositius mòbils es solen equipar amb tecnologies que permeten una velocitat de transmissió molt major (sobretot \textit{WLAN}). A més, el seu principal inconvenient és el seu curt rang d'acció (de 10 a 15 metres).
 
-Com a sistemes de localització en interiors basats en Bluetooth podem destacar Topaz\footnote{\url{http://www.tadlys.com}} i el proposat a Kotanen et al. \cite{kotanen}.
+Com a sistemes de localització en interiors basats en \textit{Bluetooth} podem destacar \textit{Topaz}\footnote{\url{http://www.tadlys.com}} i el proposat a Kotanen et al. \cite{kotanen}.
 
-\paragraph{UHF}
+\paragraph{\textit{UHF}}
 
-Els senyals UHF (Ultra High Frequency, freqüència ultra alta) operen a unes freqüències de 433 MHz i 868 MHz, que els ofereixen una capacitat de penetració apreciable. El principal problema és que es necessiten desenvolupar sistemes propietaris d'antenes que facin servir aquestes freqüències. Tot i així, el control que es té sobre el hardware, permet ajustar la precisió i el consum.
+Els senyals \textit{UHF} (\textit{Ultra High Frequency}, freqüència ultra alta) operen a unes freqüències de 433 MHz i 868 MHz, que els ofereixen una capacitat de penetració apreciable. El principal problema és que es necessiten desenvolupar sistemes propietaris d'antenes que facin servir aquestes freqüències. Tot i així, el control que es té sobre el hardware, permet ajustar la precisió i el consum.
 
-Exemples de sistemes UHF són 3-D-ID de PinPoint \cite{werb} i o el sistema TDOA de WhereNet\footnote{\url{http://www.wherenet.com}} i MeshNetworks\footnote{\url{http://mesh.nowireless.com/index.htm}}.
+Exemples de sistemes \textit{UHF} són \textit{3-D-ID} de \textit{PinPoint} \cite{werb} i o el sistema \textit{TDOA} de \textit{WhereNet}\footnote{\url{http://www.wherenet.com}} i \textit{MeshNetworks}\footnote{\url{http://mesh.nowireless.com/index.htm}}.
 
 \paragraph{Rajos infrarojos}
 
 Els sistemes basats en rajos infrarojos utilitzen tres mètodes \cite{chan}: balises actives, anàlisi d’imatges infraroges de radiació natural i anàlisi d‘imatges amb fonts de llum artificial \cite{mautz}. El principal inconvenient és la seva nul·la capacitat de penetració, necessiten una línia de visió directa.
 
-Un exemple de sistema de localització comercial basat en infrarojos és el Microsoft Kinect, amb precisió de localització de 2,5 cm a 3 m de distància \cite{khoshelham}.
+Un exemple de sistema de localització comercial basat en infrarojos és el \textit{Microsoft Kinect}, amb precisió de localització de 2,5 cm a 3 m de distància \cite{khoshelham}.
 
 \paragraph{Sistemes basats en sensors}
 
-Els darrers anys, l'abaratiment i popularització de diversos tipus de sensors, ha portat el desenvolupat estàndards de comunicació per aquests dispositius. Podríem destacar el ZigBee\footnote{\url{https://www.zigbee.org/}} i l'estàndard 802.15.4 (base de ZigBee i altres protocols). Els avantatges d'aquests sensors, es centren sobretot en la capacitat de saber la seva posició, a més de la seva disponibilitat, cada cop major.
+Els darrers anys, l'abaratiment i popularització de diversos tipus de sensors, ha portat el desenvolupat estàndards de comunicació per aquests dispositius. Podríem destacar el \textit{ZigBee}\footnote{\url{https://www.zigbee.org/}} i l'estàndard 802.15.4 (base de \textit{ZigBee} i altres protocols). Els avantatges d'aquests sensors, es centren sobretot en la capacitat de saber la seva posició, a més de la seva disponibilitat, cada cop major.
 
-Com a estudi es pot destacar el realitzat per Álvarez et al. \cite{alvarez}. on tracten la implementació d’un sistema de localització basat en ZigBee, utilitzant trilateració basant-se en la intensitat de senyal rebut. Obtenen mesures acurades a menys de 3 metres, però amb el nombre adequat d'emissors aconsegueixen un error de menys d’1 metre el 50\% del temps i un error de menys de 1,75 metres el 75\% del temps.
+Com a estudi es pot destacar el realitzat per Álvarez et al. \cite{alvarez}. on tracten la implementació d’un sistema de localització basat en \textit{ZigBee}, utilitzant trilateració basant-se en la intensitat de senyal rebut. Obtenen mesures acurades a menys de 3 metres, però amb el nombre adequat d'emissors aconsegueixen un error de menys d’1 metre el 50\% del temps i un error de menys de 1,75 metres el 75\% del temps.
 
 \paragraph{Sistemes híbrids}
 
-Altres sistemes combinen diverses tecnologies per tal d'aprofitar-se dels seus avantatges i mitigar els seus inconvenients. Destaquen el sistema HP Labs Smart-LOCUS \cite{oconnor}, que utilitza una combinació de radio freqüència i ultrasons; \footnote{\url{http://www.radianse.com}} i Versus\footnote{\url{http://www.versustech.com}} que utilitzen una combinació de radio freqüència i rajos infrarojos; i el sistema EIRIS\footnote{\url{http://www.elcomel.com.ar/english/eiris.htm}}, que fa servir una barreja de rajos infrarojos, UHF i sistemes de radio de baixa freqüència.
+Altres sistemes combinen diverses tecnologies per tal d'aprofitar-se dels seus avantatges i mitigar els seus inconvenients. Destaquen el sistema \textit{HP Labs Smart-LOCUS} \cite{oconnor}, que utilitza una combinació de radio freqüència i ultrasons; \textit{Radianse} \footnote{\url{http://www.radianse.com}} i \textit{Versus}\footnote{\url{http://www.versustech.com}} que utilitzen una combinació de radio freqüència i rajos infrarojos; i el sistema \textit{EIRIS}\footnote{\url{http://www.elcomel.com.ar/english/eiris.htm}}, que fa servir una barreja de rajos infrarojos, \textit{UHF} i sistemes de radio de baixa freqüència.
 
-\paragraph{WLAN}
+\paragraph{\textit{WiFi}}
 
-WLAN és una tecnologia de transmissió de dades que opera en la banda dels 2,4 GHz i els 5 GHz. Actualment l'estàndard més estès és el IEEE 802.11, amb les variacions 802.11a, 802.11b, 802.11g, i 802.11n. Les diferències entre elles són la velocitat de transmissió de dades, la freqüència utilitzada, l’ample de banda i les tècniques de modulació \cite{chan}. Els punts d’accés WiFi transmeten balises per tal de que altres dispositius les puguin descobrir. Aquests senyals es poden captar tant si la xarxa està protegida com si és oberta i malgrat no s’estigui connectat a ella \cite{vilaseca}.
+\textit{WiFi} és una tecnologia de transmissió de dades que opera en la banda dels 2,4 GHz i els 5 GHz. Actualment l'estàndard més estès és el IEEE 802.11, amb les variacions 802.11a, 802.11b, 802.11g, i 802.11n. Les diferències entre elles són la velocitat de transmissió de dades, la freqüència utilitzada, l’ample de banda i les tècniques de modulació \cite{chan}. Els punts d’accés \textit{WiFi} transmeten balises per tal de que altres dispositius les puguin descobrir. Aquests senyals es poden captar tant si la xarxa està protegida com si és oberta i malgrat no s’estigui connectat a ella \cite{vilaseca}.
 
-El seu principal avantatge és que la seva expansió és molt notable, tant a edificis privats com públics. Aquesta disponibilitat els fa ideals per tal d'implementar sistemes de localització en interiors des del punt de vista dels costs. Per contra, WiFi presenta una sèrie de problemes addicionals:
+El seu principal avantatge és que la seva expansió és molt notable, tant a edificis privats com públics. Aquesta disponibilitat els fa ideals per tal d'implementar sistemes de localització en interiors des del punt de vista dels costs. Per contra, \textit{WiFi} presenta una sèrie de problemes addicionals:
 
 \begin{itemize}
 
-    \item La intensitat dels senyals de WiFi és molt poc estable i pot fluctuar durant el temps en una mateix posició.
+    \item La intensitat dels senyals de \textit{WiFi} és molt poc estable i pot fluctuar durant el temps en una mateix posició.
     \item La intensitat del senyal es pot veure afectada per variacions en la meteorologia, a més de fer-ho de manera no uniforme als diferents punts d'accés \cite{crane}.
     \item L'espectre de ràdio de 2,4 GHz és compartit per diferents tecnologies pel que causen interferències o renou.
-    \item Els punts d'accés operen sobre diferents canals. Una tarja Wifi no pot captar tots els canals a la vegada, pel que per captar senyals de tots els punts d'accés ha d'anar canviant de canal i de freqüència.
-    \item La mesura del RSS és, en realitat, molt poc precisa.
+    \item Els punts d'accés operen sobre diferents canals. Una tarja \textit{WiFi} no pot captar tots els canals a la vegada, pel que per captar senyals de tots els punts d'accés ha d'anar canviant de canal i de freqüència.
+    \item La mesura del \textit{RSS} és, en realitat, molt poc precisa.
     \item En casos en què no s’utilitzi infraestructura pròpia es pot presentar el problema de que el nombre de punts d'accés disponibles pot variar notablement.
 
 \end{itemize}
 
-En quant als sistemes existents, la precisió en RSS es troba entre, aproximadament, els 3 i els 30 metres.
+En quant als sistemes existents, la precisió en \textit{RSS} es troba entre, aproximadament, els 3 i els 30 metres.
 
-La tecnologia WiFi com a suport per la construcció de sistemes de localització en interiors ha estat llargament estudiada pels beneficis comentats anteriorment, i s'han aportat maneres de mitigar els problemes anteriors.
+La tecnologia \textit{WiFi} com a suport per la construcció de sistemes de localització en interiors ha estat llargament estudiada pels beneficis comentats anteriorment, i s'han aportat maneres de mitigar els problemes anteriors.
 
 El sistema pioner en fer servir la intensitat del senyal rebut va ser RADAR \cite{bahl}. Aquest sistema fa servir l'algoritme dels k veïns més propers. Segons aquest estudi s'arriba a la conclusió de que factors de disseny i presa de dades com l'orientació de l'usuari, el nombre de veïns propers, el nombre de punts de dades i el nombre de mostres afecten a l'exactitud de les localitzacions.
 
-El sistema Horus \cite{youssef} va ser desenvolupat per proveir informació de posicionament molt precisa sense requerir una gran potència de computació. Fa servir mètodes probabilístics amb els que assigna una categoria a cada coordenada de localització candidata. Augmentant el nombre de localitzacions de mostra es pot millorar l'exactitud, ja que es pot millorar l'estimació utilitzant les mitjanes i les desviacions estàndard de la distribució gaussiana.
+El sistema \textit{Horus} \cite{youssef} va ser desenvolupat per proveir informació de posicionament molt precisa sense requerir una gran potència de computació. Fa servir mètodes probabilístics amb els que assigna una categoria a cada coordenada de localització candidata. Augmentant el nombre de localitzacions de mostra es pot millorar l'exactitud, ja que es pot millorar l'estimació utilitzant les mitjanes i les desviacions estàndard de la distribució gaussiana.
 
-El sistema COMPASS \cite{king} va ser desenvolupat a partir de la feina prèvia de Horus, amb l’afegit de que utilitza l'orientació de l’usuari per seleccionar un subconjunt de les dades per dur a terme l’anàlisi probabilístic de la posició. També estudia l’efecte de la presencia de gent a l’entorn, sobretot al que es refereix a l’absorció del senyal.
+El sistema \textit{COMPASS} \cite{king} va ser desenvolupat a partir de la feina prèvia de \textit{Horus}, amb l’afegit de que utilitza l'orientació de l’usuari per seleccionar un subconjunt de les dades per dur a terme l’anàlisi probabilístic de la posició. També estudia l’efecte de la presencia de gent a l’entorn, sobretot al que es refereix a l’absorció del senyal.
 
 Els estudis duts a terme per Rogoleva \cite{rogoleva} i Bolliger \cite{bolliger} són interessants per l’aproximació que duen a terme per construir el mapa de ràdio de manera col·laborativa. En ells, es proposa l’ajustament continuu del mapa de ràdio amb els valors mesurats pels diversos usuaris del sistema. Aquest mapa és considerat com un dels més massius i acurats.
 
 L'estudi exposat per García-Valverde et al. \cite{garcia} proposa un sistema d'aprenentatge que permeti minimitzar l'error i localitzar amb precisió sense necessitat d'una infraestructura pròpia. Alguns d'aquests errors poden ser minimitzats utilitzant algunes tècniques de preprocessament.  Per tractar amb informació inexacta o amb la incertesa, proposen l'ús addicional d'algorismes de lògica difusa. El mètode utilitza la informació de punts emissors existents, no propis, sobre els que es duu a terme un entrenament de l'ordre de dies. A més, el sistema aprèn incrementalment durant tot el seu cicle de vida, pel que és adaptable al llarg del temps en quant a variacions en l’entorn.
 
-Battiti et al. \cite{battiti} proposen un sistema de localització per WiFi que utilitza un classificador basat en xarxes neuronals. Amb aquest sistema s'aconsegueix una precisió d'1 metre amb una probabilitat del 72\%.
+Battiti et al. \cite{battiti} proposen un sistema de localització per \textit{WiFi} que utilitza un classificador basat en xarxes neuronals. Amb aquest sistema s'aconsegueix una precisió d'1 metre amb una probabilitat del 72\%.
 
 Ekahau\footnote{\url{http://www.ekahau.com}} és un sistema de posicionament comercial que combina xarxes baiesianes, complexitat estocàstica i aprenentatge competitiu en temps real. La localització es calcula en un servidor central.
 
-AeroScout\footnote{\url{http://www.aeroscout.com/}} és un exemple de sistema de localització en interiors basat en TDOA. Requereix que el senyal de radio es rebi en tres o més punts separats, sincronitzats de manera molt acurada (al nivell de nanosegons).
+AeroScout\footnote{\url{http://www.aeroscout.com/}} és un exemple de sistema de localització en interiors basat en \textit{TDOA}. Requereix que el senyal de radio es rebi en tres o més punts separats, sincronitzats de manera molt acurada (al nivell de nanosegons).
 
 Els estudis de Tsuda et al. \cite{tsuda} utilitzen aprenentatge automàtic per calcular una possible posició futura basant-se en la ruta que formen les posicions anteriors. Per aquesta tasca fan servir predictors basats en filtres de Kalman, filtres de Kalman millorats, filtres de partícules, mètodes de segona opinió i mètodes de modificació de consulta.
 
 
 \subsection{Sistemes inercials}
 
-Molts dels sistemes actuals de localització en interiors, que es basen en tecnologies sense fils com UWB i WLAN, afegeixen correccions mitjançant unitats de mesura inercial.
+Molts dels sistemes actuals de localització en interiors, que es basen en tecnologies sense fils com \textit{UWB} i \textit{WLAN}, afegeixen correccions mitjançant unitats de mesura inercial.
 
 Els sistemes inercials generalment consisteixen en un acceleròmetre, un giroscopi, un magnetòmetre, un convertidor analògic/digital i un microcontrolador o un processador digital de senyal. Amb aquestes eines es pot obtenir l'orientació de l’usuari i la seva acceleració que, juntament amb una posició inicial i el temps transcorregut, permet obtenir la nova posició d’aquest. Aquest tipus de sistema genera dades de posició relativa o absoluta, que es combinen amb filtres de partícules o de Kalman \cite{vilaseca}. Algunes solucions integren integració amb altres tècniques com la doble integració \cite{negard}, xarxes neuronals \cite{beauregard} o lògica difusa \cite{tome} \cite{garcia}.
 
@@ -171,11 +171,11 @@ El principal problema és que els sensors es poden veure afectats per problemes 
 
 A més, cal tenir en compte que els valors de densitat de flux magnètic que calculen l'orientació es poden veure afectats per interferències d’altres fonts d’electromagnetisme, com instal·lacions elèctriques o altres dispositius electrònics.
 
-En \cite{glanzer} es presenta un sistema de posicionament en interiors basat en IMU\footnote{Inertial Measurement Unit, unitat de mesura inercial}, on es fa servir un coneixement previ sobre l’edifici. S’utilitza la doble integració sobre el valor d'acceleració sobre el temps per calcular la posició. Per estabilitzar l'error que s'afegeix amb el temps, s'utilitza la informació d'orientació amb un filtre de Kalman estès (EKF) a part d'altres compensacions.
+En \cite{glanzer} es presenta un sistema de posicionament en interiors basat en \textit{IMU}\footnote{\textit{Inertial Measurement Unit}, unitat de mesura inercial}, on es fa servir un coneixement previ sobre l’edifici. S’utilitza la doble integració sobre el valor d'acceleració sobre el temps per calcular la posició. Per estabilitzar l'error que s'afegeix amb el temps, s'utilitza la informació d'orientació amb un filtre de Kalman estès a part d'altres compensacions.
 
-El sistema Bodyguard \cite{koppe} és un sistema inercial amb maquinari propi. El sistema detecta moviments amb 6 graus de llibertat i està especialitzat en la localització de persones en moviment. Com que una de les seves aplicacions són les emergències, el dispositiu suporta temperatures entre -25ºC i 70ºC.
+El sistema \textit{Bodyguard} \cite{koppe} és un sistema inercial amb maquinari propi. El sistema detecta moviments amb 6 graus de llibertat i està especialitzat en la localització de persones en moviment. Com que una de les seves aplicacions són les emergències, el dispositiu suporta temperatures entre -25ºC i 70ºC.
 
-Altres exemples són NavShoe \cite{krach} o InertiaCube3D
+Altres exemples són \textit{NavShoe} \cite{krach} o \textit{InertiaCube3D}
 
 
 \subsection{Grups d’eines de localització en interiors existents}
@@ -184,29 +184,31 @@ Com a part o objectiu de les investigacions en el camp de la localització en in
 
 En aquest sentit, s'han identificat algunes eines lliures que poden ser estudiades i reutilitzades per a la realització de l'estudi.
 
-\subsubsection{PlaceLab}
+\subsubsection{\textit{PlaceLab}}
 
-Es tracta d’un grup d’eines per dur a terme la construcció del programari necessari en sistemes de localització en interiors \cite{sohn}. Els seus objectius són: facilitar la implementació de sistemes de localització per part dels investigadors, proveir modularitat en quant als components de programari encarregats de les diferents tasques del procés de localització i proveir suport per diverses plataformes, tant en el procés de sensorització (GPS, WiFi, Bluetooth i GSM), com als sistemes operatius on executar-lo (Windows, Mac OS X, GNU/Linux i FreeBSD). El sistema es troba implementat amb les biblioteques Java 2 Micro Edition (J2ME), pel que és compatible tant amb telèfons mòbils antics com amb ordinadors estàndard.
+Es tracta d’un grup d’eines per dur a terme la construcció del programari necessari en sistemes de localització en interiors \cite{sohn}. Els seus objectius són: facilitar la implementació de sistemes de localització per part dels investigadors, proveir modularitat en quant als components de programari encarregats de les diferents tasques del procés de localització i proveir suport per diverses plataformes, tant en el procés de sensorització (\textit{GPS}, \textit{WiFi}, \textit{Bluetooth} i \textit{GSM}), com als sistemes operatius on executar-lo (\textit{Windows}, \textit{Mac OS X}, \textit{GNU/Linux} i \textit{FreeBSD}). El sistema es troba implementat amb les biblioteques \textit{Java 2 Micro Edition} (\textit{J2ME}), pel que és compatible tant amb telèfons mòbils antics com amb ordinadors estàndard.
 
-Es tracta d’un grup d’eines lliure, alliberat amb la llicència GPL v2. El codi es troba disponible a Sourceforge, encara que es troba en un estat d’abandonament, ja que els darrers canvis dels que hi ha constància daten de 2010, pel que segurament s’haurien de realitzar molts ajustaments.
+Es tracta d’un grup d’eines lliure, alliberat amb la llicència \textit{GPL v2}. El codi es troba disponible a \textit{Sourceforge}\footnote{\url{http://sourceforge.net/projects/placelab/}}, encara que es troba en un estat d’abandonament, ja que els darrers canvis dels que hi ha constància daten de 2010, pel que segurament s’haurien de realitzar molts ajustaments.
 
 \paragraph{Arquitectura}
 
-L'arquitectura proveeix un sistema multicapa en el que en la més inferior es troben els Spotters, els elements que detecten la informació dels sensors. A una capa superior, els Trackers reben la informació de sensorització dels Spotters i la comparen amb les dades dels possibles entrenaments fora de línia, emmagatzemats a elements anomenats Mappers, i infereixen una localització basant-se en diferents tipus d’algorismes. Aquesta es passa a un nivell superior en forma d'un element anomenat Estimate, on es troben els adaptadors necessaris perquè hi interactuïn les aplicacions. La comunicació entre capes es porta a terme amb interfícies comunes, independents de dels algorismes implementats.
+L'arquitectura proveeix un sistema multicapa en el que en la més inferior es troben els \textit{Spotters}, els elements que detecten la informació dels sensors. A una capa superior, els \textit{Trackers} reben la informació de sensorització dels \textit{Spotters} i la comparen amb les dades dels possibles entrenaments fora de línia, emmagatzemats a elements anomenats \textit{Mappers}, i infereixen una localització basant-se en diferents tipus d’algorismes. Aquesta es passa a un nivell superior en forma d'un element anomenat \textit{Estimate}, on es troben els adaptadors necessaris perquè hi interactuïn les aplicacions. La comunicació entre capes es porta a terme amb interfícies comunes, independents de dels algorismes implementats.
 
-\subsubsection{AirPlace}
+\subsubsection{\textit{AirPlace}}
 
-AirPlace \cite{laoudias} és un programari per dur a terme localització en interiors utilitzant la potència del senyal rebut dels punts d'accés WiFi existents a l'entorn. AirPlace gestiona el cicle de vida sencer d'una aplicació de localització, des de la creació del mapa de ràdio, fins la localització de l'usuari final. Per això es divideix en tres aplicacions diferents: AirPlace logger, Radiomap Server i AirPlace Tracker.
+\textit{AirPlace} \cite{laoudias} és un programari per dur a terme localització en interiors utilitzant la potència del senyal rebut dels punts d'accés \textit{WiFi} existents a l'entorn. \textit{AirPlace} gestiona el cicle de vida sencer d'una aplicació de localització, des de la creació del mapa de ràdio, fins la localització de l'usuari final. Per això es divideix en tres aplicacions diferents: \textit{AirPlace Logger}, \textit{Radiomap Server} i \textit{AirPlace Tracker}.
 
-L'AirPlace Logger du a terme la tasca d'enregistrament de dades WiFi per la creació del mapa de ràdio del sistema de localització. Es tracta d'una aplicació per Android que, utilitzant un plànol de la zona a mapejar i les distàncies reals que representen l'ample i alt d'aquest, permet indicar una situació i realitzar mesures de les intensitats de les xarxes WiFi detectades en aquest. El nombre de mostres a prendre a cada punt pot ser configurada (de 5 fins a 30), així com l'interval entre mostres (0,5, 1 i 2 segons).
+L'\textit{AirPlace Logger} du a terme la tasca d'enregistrament de dades \textit{WiFi} per la creació del mapa de ràdio del sistema de localització. Es tracta d'una aplicació per \textit{Android} que, utilitzant un plànol de la zona a escanejar i les distàncies reals que representen l'ample i alt d'aquest, permet indicar una situació i realitzar mesures de les intensitats de les xarxes \textit{WiFi} detectades en aquest. El nombre de mostres a prendre a cada punt pot ser configurada (de 5 fins a 30), així com l'interval entre mostres (0,5, 1 i 2 segons).
 
-El Radiomap Server consisteix en una aplicació Java que exposa un petit servidor web per tal de rebre la informació de l'AirPlace Logger, generar el mapa de ràdio i distribuir-lo als usuaris que executin AirPlace Tracker per tal de dur a terme el procés de localització.Al generar el mapa de ràdio, una vegada que l'AirPlace logger ha enviat les dades enregistrades al servidor, es genera un fitxer on, per cada punt del plànol, es calcula la mitjana de les potències enregistrades. Aquest fitxer resultant és, pròpiament, el mapa de ràdio.
+El \textit{Radiomap Server} consisteix en una aplicació Java que exposa un petit servidor web per tal de rebre la informació de l'\textit{AirPlace Logger}, generar el mapa de ràdio i distribuir-lo als usuaris que executin \textit{AirPlace Tracker} per tal de dur a terme el procés de localització.Al generar el mapa de ràdio, una vegada que l'\textit{AirPlace Logger} ha enviat les dades enregistrades al servidor, es genera un fitxer on, per cada punt del plànol, es calcula la mitjana de les potències enregistrades. Aquest fitxer resultant és, pròpiament, el mapa de ràdio.
 
-L'AirPlace Tracker és una aplicació d'Android que, basant-se en el mapa de radio generat amb l'AirPlace Logger i el Radiomap Server, permet localitzar a l'usuari en l'interior de l'edifici analitzat. Aquesta divisió de tasques permet a l'AirPlace Tracker dur a terme el procés de localització independentment, sense la necessitat de contactar cap servidor extern, excepte per obtenir inicialment una còpia del fitxer que representa el mapa de ràdio. Això permet evitar el sobreprocessament degut al requeriment constant d'informació, manté una baixa congestió de la xarxa, un estalvi considerable de bateria, així com salvaguarda la privacitat de l'usuari, ja que a partir de les peticions, el servidor podria inferir dades sobre la posició.
-Per tal de fer funcionar l'AirPlace Tracker, s'han de proveir el plànol de l'edifici i el mapa de radio. Es troben disponibles quatre algorismes per estimar la posició: el K nearest neighbor, el weighted k nearest neighbor, el probabilistic maximum a posteriori i el probabilistic minimum mean square error, i es pot alternar entre ells fent servir el menú de l'aplicació.
+L'\textit{AirPlace Tracker} és una aplicació d'\textit{Android} que, basant-se en el mapa de radio generat amb l'\textit{AirPlace Logger} i el \textit{Radiomap Server}, permet localitzar a l'usuari en l'interior de l'edifici analitzat. Aquesta divisió de tasques permet a l'\textit{AirPlace Tracker} dur a terme el procés de localització independentment, sense la necessitat de contactar cap servidor extern, excepte per obtenir inicialment una còpia del fitxer que representa el mapa de ràdio. Això permet evitar el sobreprocessament degut al requeriment constant d'informació, manté una baixa congestió de la xarxa, un estalvi considerable de bateria, així com salvaguarda la privacitat de l'usuari, ja que a partir de les peticions, el servidor podria inferir dades sobre la posició.
+
+Per tal de fer funcionar l'\textit{AirPlace Tracker}, s'han de proveir el plànol de l'edifici i el mapa de radio. Es troben disponibles quatre algorismes per estimar la posició: el \textit{K nearest neighbors}, el \textit{weighted k nearest neighbors}, el \textit{probabilistic maximum a posteriori} i el \textit{probabilistic minimum mean square error}, i es pot alternar entre ells fent servir el menú de l'aplicació.
+
 El programa disposa de dos modes de funcionament: el mode en línia i el mode fora de línia. El primer situa en el mapa, en temps real, a l'usuari. Al segon se li proveeix un nou mapa de radio, creat amb la combinació dels dos programes anteriors, estima les posicions del nou mapa basant-se en les dades de potència de senyal i calcula l'error mitjà. Aquest darrer mètode permet l'anàlisi a posteriori de les dades recollides pels experiments de localització.
 
-Es tracta d'un programari desenvolupat a la Universitat de Xipre i redistribuït de manera lliure, sota la llicència GPL versió 2. Això ha suposat un avantatge destacable a l'estudi, ja que per realitzar les proves s'ha hagut de modificar el codi font d'AirPlace Tracker.
+Es tracta d'un programari desenvolupat a la Universitat de Xipre i redistribuït de manera lliure, sota la llicència GPL versió 2. Això ha suposat un avantatge destacable a l'estudi, ja que per realitzar les proves s'ha hagut de modificar el codi font d'\textit{AirPlace Tracker}.
 
 Un cop analitzats algunes de les diferents tècniques i tecnologies utilitzades en la localització en interiors, així com alguns sistemes lliures disponibles per suportar l'estudi, es passa a descriure el procés de creació del sistema de localització que permetrà investigar la influència de la presència d'altres persones en la precisió.
 
