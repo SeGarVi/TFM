@@ -8,22 +8,25 @@
 \usepackage{amsmath,amssymb,amsfonts,latexsym}
 \usepackage[dvips]{graphicx}
 \usepackage[footnotesize]{caption}
-\usepackage{wrapfig}
 \usepackage{colortbl}
 \usepackage[table]{xcolor}
 \usepackage{hyperref}
 \usepackage{url}
 \usepackage{eurosym}
+\usepackage{fancyhdr} 
 \DeclareInputText{128}{\euro}
 
-%\usepackage{multicol}
-%\usepackage{/usr/share/texmf-dist/tex/latex/wrapfig/wrapfig}
-%\usepackage{cancel}
-%\pagestyle{headings}
 
+\renewcommand{\headrulewidth}{0mm}
 
-
-
+\fancypagestyle{tfm}
+{
+   
+\lhead{}
+\rhead{}
+\lfoot{{\vspace{5mm}\href{https://creativecommons.org/licenses/by-sa/3.0/deed.ca}{\includegraphics[width=2cm]{imatges/cc.png}}}}
+}
+\pagestyle{tfm}
 
 \title{Influència del nombre d'usuaris en sistemes de localització en interiors basats en Wi-Fi}
 \author{Sergio García Villalonga \\
@@ -31,10 +34,15 @@
           \and Director: Antoni Pérez Navarro \\
           (aperezn@uoc.edu)}
 
+\providecommand{\keywords}[1]{\textbf{\textit{Paraules clau:}} #1}
+
 \begin{document}
+
 \maketitle
 
 \input parts/00_abstract.tex
+
+\keywords{localització en interiors, \textit{WiFi}, precisió, dispersió, usuaris, \textit{KNN}, \textit{WKNN}, \textit{MAP}, \textit{MMSE}.}
 
 \section{Introducció}
 \input parts/01_introduccio.tex
